@@ -1,4 +1,4 @@
-# megatype
+# ℳegatype
 Execute typographic structure with legendary technique.
 
 ### Install
