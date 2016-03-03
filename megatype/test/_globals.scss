@@ -1,0 +1,109 @@
+// =====================================================
+// ------------------ Megatype globals ------------------
+// =====================================================
+// @author Thomas Bredin-Grey <tom@studiothick>
+// Megatype: https://github.com/StudioThick/megatype
+// =====================================================
+
+* {
+    box-sizing: border-box;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+    max-width: 100%;
+    background-color: site-color(white);
+}
+
+html {
+    @include rootsize;
+}
+
+.page {
+    @extend %container;
+    background-color: red;
+}
+
+@if $debug-breakpoints == true and $debug-allow == true {
+    @include debug-breakpoints;
+}
+
+@if $debug-grid == true and $debug-allow == true {
+    @include debug-grid;
+}
+
+@if $debug-columns == true and $debug-allow == true {
+    img { opacity: 0.75; }
+}
+
+
+img {
+    -ms-interpolation-mode: bicubic;
+    height: auto;
+    vertical-align: middle;
+    max-width: 100%;
+
+    .no-svg & {
+        display: none; // testing gulp-modernizr
+    }
+
+    &.inject-me {
+        opacity: 0;
+    }
+}
+
+
+// sensible defaults for svgs so they display well across browsers
+svg {
+    max-width: 99.8%; // not 100% - to avoid clipping in some scenarios
+    max-height: 99.8%;
+
+    &.injected-svg {
+        animation: fade-in 0.125s ease 1 both;
+    }
+
+    .fill, * {
+        fill: inherit;
+    }
+
+    .stroke {
+        stroke: inherit;
+    }
+}
+
+use {
+    fill: inherit;
+    fill: currentColor;
+}
+
+// common animation keyframes
+// fade in
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+// fade out
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.sans {
+    font-family: font-family-of($sans);
+}
+
+.serif {
+    font-family: font-family-of($serif);
+}
+

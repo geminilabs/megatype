@@ -1,3 +1,12 @@
+// =====================================================
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ---------------------- Megatype ---------------------
+// --- CSS breakpoints, typographic rhythm and grids ---
+// _____________________________________________________
+// =====================================================
+// @author Thomas Bredin-Grey <tom@studiothick>
+// Megatype: https://github.com/StudioThick/megatype
+// =====================================================
 /* CSS compiled from SCSS */
 /* --------------------------------------- */
 
@@ -6,7 +15,6 @@ $debug-allow: false !default;
 
 // import layout toolsets
 @import "susy";
-@import "scut";
 
 // import site base
 @import "megatype/config";
@@ -15,7 +23,6 @@ $debug-allow: false !default;
 @import "megatype/toolsets/toolset__units";
 @import "megatype/toolsets/toolset__math";
 @import "megatype/toolsets/toolset__easing";
-@import "megatype/toolsets/toolset__misc";
 
 // import mixins
 @import "megatype/map-helpers";
@@ -24,3 +31,7 @@ $debug-allow: false !default;
 @import "megatype/typography";
 @import "megatype/debug";
 @import "megatype/text-link";
+
+// import tests — enable to output some test styles
+// @import "megatype/test/globals";
+// @import "megatype/test/typography";
