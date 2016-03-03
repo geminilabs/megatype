@@ -1,0 +1,22 @@
+// =====================================================
+// ------------- Megatype helper functions -------------
+// =====================================================
+// @author Thomas Bredin-Grey <tom@studiothick>
+// Megatype: https://github.com/StudioThick/megatype
+// =====================================================
+
+// shorthand function to retreive breakpoint values
+@function break-get($break, $val) {
+    @return map-get(map-get($breakpoint-map, $break), $val);
+}
+
+// color variable helper
+@function site-color($color) {
+    @return map-get($site-colors, $color);
+};
+
+// get gutter for current breakpoint
+@function gutter() {
+    $g: break-get($current-breakpoint, gutter);
+    @return $g;
+}

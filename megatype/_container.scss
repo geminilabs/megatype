@@ -1,0 +1,35 @@
+// =====================================================
+// -------------- Megatype Susy container --------------
+// =====================================================
+// @author Thomas Bredin-Grey <tom@studiothick>
+// Megatype: https://github.com/StudioThick/megatype
+// =====================================================
+
+
+// sets containers for all breakpoints. It is important to use this to avoid incorrect breakpoint values due to type scaling
+@mixin set-container {
+    @extend %container;
+}
+
+// extend helper for cleaner markup
+%container {
+    @include layout(break-get(0, layout));
+
+    $i: 1;
+    @each $break in $breaks {
+         @if break-get($break, max) != none or unit(break-get(1, max)) != "%" {
+
+            @include min-width($break) {
+                $break-adjusted: px-to-em(break-get($break, max), nth($sizes, $i));
+
+                @if $debug-columns == true and $debug-allow == true {
+                    @include container($break-adjusted show-columns);
+                    background-clip: border-box;
+                } @else {
+                    @include container($break-adjusted hide);
+                }
+            }
+        }
+        $i: $i + 1;
+    }
+}

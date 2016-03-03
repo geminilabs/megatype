@@ -1,0 +1,94 @@
+// =====================================================
+// --------------- Megatype debug mixins ---------------
+// =====================================================
+// @author Thomas Bredin-Grey <tom@studiothick>
+// Megatype: https://github.com/StudioThick/megatype
+// =====================================================
+
+
+// debug breakpoints
+@mixin debug-breakpoints{
+    body {
+        // margin-bottom: 2rem;
+
+        &:before {
+            display: block;
+            position: fixed;
+            box-sizing: border-box;
+            bottom: 0;
+            animation-fill-mode: both;
+            @include rem(height, 2rem);
+            @include rem(line-height, 2rem);
+            text-align: center;
+            background-color: $debug-color;
+            background-color: transparentize($debug-color, 0.15);
+            color: #fff;
+            font-size: 14px;
+            z-index: 10000;
+            @include rem(padding, 0 2rem);
+            border: 1px solid lighten($debug-color, 10%);
+            text-shadow: 0 -1px 0 darken($debug-color, 25%);
+            animation: breakpoint-info-in 0.75s $easeOutCubic;
+            left: 50%;
+            transform: translateX(-50%) translateZ(0);
+            width: 100%;
+
+            @each $break in $breaks {
+                @include breakpoint-layout($break) {
+                    content: "#{$break} ---- cols: #{break-get($break, cols)} ---- start: #{break-get($break, start)} ---- max-width: #{break-get($break, max)}";
+                }
+            }
+        }
+    }
+
+    @keyframes breakpoint-info-in {
+        0% {
+            transform: translateY(100%) translateX(-50%) translateZ(0);
+        }
+        100% {
+            transform: translateX(-50%) translateZ(0);
+        }
+    }
+
+    @keyframes breakpoint-marker-in {
+        0% {
+            transform: translateY(100%) translateX(-50%) translateZ(0);
+        }
+        100% {
+            transform: translateX(-50%) translateZ(0);
+        }
+    }
+}
+
+
+// debug grid
+@mixin debug-grid {
+    html {
+        // background: url('../images/placeholder/grid.png') center 0 repeat #fff;
+
+        @include all-breakpoints {
+            background:
+                // vertical grid starts at 0
+                linear-gradient(to bottom, transparentize(darken($debug-color, 5%), 0.5) 1px, transparent 1px, transparent $current-rootsize),
+                // for horizontal grid, starts at center, is more complex to draw
+                linear-gradient(to right,
+                    transparent 0px,
+                    transparent $current-rootsize / 2 - 1px,
+                    transparentize(darken($debug-color, 5%), 0.5) $current-rootsize / 2 - 1px,
+                    transparentize(darken($debug-color, 5%), 0.5) $current-rootsize / 2,
+                    transparent $current-rootsize / 2,
+                    transparent $current-rootsize);
+            background-repeat: repeat;
+            background-position: center top;
+            background-size: $current-rootsize $current-rootsize;
+        }
+    }
+
+    body {
+        background-color: transparent;
+
+        > * {
+            opacity: 0.75;
+        }
+    }
+}
