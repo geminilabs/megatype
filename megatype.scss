@@ -32,6 +32,6 @@ $debug-allow: false !default;
 @import "megatype/debug";
 @import "megatype/text-link";
 
-// import tests — enable to output some test styles
-// @import "megatype/test/globals";
-// @import "megatype/test/typography";
+// import test css — enable to output some test styles
+@import "megatype/test/globals";
+@import "megatype/test/typography";
