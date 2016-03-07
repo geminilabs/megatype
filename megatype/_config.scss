@@ -7,12 +7,12 @@
 
 
 // colors
-$site-colors: (
+$palettes: (
     white:          #ffffff,
     black:          #000000
 ) !default;
 
-$site-color-names: map-keys($site-colors) !default;
+$site-color-names: map-keys($palettes) !default;
 
 
 // ===================================
