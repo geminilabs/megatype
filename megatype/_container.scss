@@ -6,6 +6,47 @@
 // =====================================================
 
 
+// helper to calculate susy layout from a breakpoint variable
+@function calc-layout($break) {
+    $break-width: break-get($break, max);
+    $break-start: break-get($break, start);
+    $break-cols: break-get($break, cols);
+    $break-gutter: break-get($break, gutter);
+
+    // save initial unit
+    $max-unit: unit($break-width);
+
+    // handle percentages - base column width on the startpoint of the breakpoint instead
+    @if $max-unit == "%" {
+        @if $break-start != 0 and $break-start != 0px {
+            $break-width: break-get($break, start);
+        } @else {
+            // first breakpoint - use breakpoint 1 start width instead
+            $break-width: break-get($break + 1, start);
+        }
+    }
+
+    // update unit
+    $max-unit: unit($break-width);
+
+    // convert all to rem
+    @if $max-unit == "px" {
+        $break-width: px-to-rem($break-width, break-get($break, rootsize));
+    }
+    @if $max-unit == "em" {
+        $break-width: em-to-rem($break-width);
+    }
+
+    // calculate column width
+    $calc-cols: ($break-width - $break-gutter * ($break-cols - 1)) / $break-cols;
+
+    // construct susy layout
+    $break-layout: $break-cols ($calc-cols $break-gutter) inside-static;
+
+    @return $break-layout;
+}
+
+
 // sets containers for all breakpoints. It is important to use this to avoid incorrect breakpoint values due to type scaling
 @mixin set-container {
     @extend %container;
@@ -13,23 +54,24 @@
 
 // extend helper for cleaner markup
 %container {
-    @include layout(break-get(0, layout));
-
-    $i: 1;
+    $i: 0;
     @each $break in $breaks {
-         @if break-get($break, max) != none or unit(break-get(1, max)) != "%" {
+        $break-layout: calc-layout($break);
+        // apply susy layout
+        @include layout($break-layout);
 
+        // apply max with and
+        @if break-get($break, max) != none {
             @include min-width($break) {
-                $break-adjusted: px-to-em(break-get($break, max), nth($sizes, $i));
-
                 @if $debug-columns == true and $debug-allow == true {
-                    @include container($break-adjusted show-columns);
+                    @include container(#{$break-layout} show-columns);
                     background-clip: border-box;
                 } @else {
-                    @include container($break-adjusted hide);
+                    @include container(#{$break-layout} hide);
                 }
             }
         }
         $i: $i + 1;
     }
 }
+

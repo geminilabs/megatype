@@ -68,6 +68,14 @@
     @return $value;
 }
 
+// Converts a em value to rems. Should only work in absolute em document context (root level), unless $context is specified
+@function em-to-rem($value) {
+    @if unit($value) == "em" {
+        $value : no-unit($value) * 1rem;
+    }
+    @return $value;
+}
+
 // return integer
 @function parseInt($n) {
     @return $n / ($n * 0 + 1);
