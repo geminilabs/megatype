@@ -38,10 +38,10 @@
     }
 
     // calculate column width
-    $calc-cols: ($break-width - $break-gutter * ($break-cols - 1)) / $break-cols;
+    $calc-cols: (($break-width - $break-gutter) / $break-cols) - $break-gutter;
 
     // construct susy layout
-    $break-layout: $break-cols ($calc-cols $break-gutter) inside-static;
+    $break-layout: $break-cols $break-width ($calc-cols $break-gutter) inside-static;
 
     @return $break-layout;
 }
@@ -49,20 +49,15 @@
 
 // sets containers for all breakpoints. It is important to use this to avoid incorrect breakpoint values due to type scaling
 @mixin set-container {
-    @extend %container;
-}
-
-// extend helper for cleaner markup
-%container {
     $i: 0;
-    @each $break in $breaks {
-        $break-layout: calc-layout($break);
+    @include all-breakpoints {
+        $break-layout: calc-layout($current-breakpoint);
         // apply susy layout
         @include layout($break-layout);
 
         // apply max with and
-        @if break-get($break, max) != none {
-            @include min-width($break) {
+        @if break-get($current-breakpoint, max) != none {
+            @include breakpoint-layout($current-breakpoint) {
                 @if $debug-columns == true and $debug-allow == true {
                     @include container(#{$break-layout} show-columns);
                     background-clip: border-box;

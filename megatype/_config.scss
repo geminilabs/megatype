@@ -6,6 +6,11 @@
 // =====================================================
 
 
+
+// ===================================
+// Colors
+// ===================================
+
 // colors
 $palettes: (
     white:          #ffffff,
@@ -15,25 +20,31 @@ $palettes: (
 $site-color-names: map-keys($palettes) !default;
 
 
+
 // ===================================
 // Debugging
 // ===================================
 
-// debug grid columns, block padding, grid, type baseline, & breakpoints
+// debug grid columns, grid, type baseline, & breakpoints
 $debug-columns: true !default;
-$debug-blocks: true !default;
 $debug-grid: true !default;
 $debug-baseline: true !default;
 $debug-breakpoints: true !default;
 
-// debug color
-$debug-color: #ff7f7c !default;
+// debug colors
+$debug-base: #f54848 !default;
+$debug-color: #f54848 !default;
+$debug-type: yellow !default;
+$debug-spacing: turquoise !default;
+
+// debug-size
+$debug-size: 12px !default;
 
 // grid opacity, for debugging columns
 $grid-opacity: 0.1 !default;
 
-
-
+// limit where baselkine will report warnings
+$debug-tolerance: 1px;
 
 
 
@@ -41,23 +52,15 @@ $grid-opacity: 0.1 !default;
 // Breakpoints & Grid
 // ===================================
 
-// susy settings
-$susy: (
-    global-box-sizing: border-box,
-    math: fluid,
-    container-position: auto,
-    gutter: 0,
-    debug: (
-        color: transparentize($debug-color,0.6)
-    ),
-    use-custom: (
-        rem: true
-    )
-);
+// Available susy settings
+// these are direct aliases for the $susy config map, but allow us better override control
+// $susy config map should not be modified directly: instead use these settings
+$susy-math: fluid !default;
+$susy-container-position: center !default;
+$susy-global-box-sizing: border-box !default;
+$susy-gutter-position: inside-static !default;
+$susy-debug-color: transparentize($debug-color,$grid-opacity) !default;
 
-// responsive grid settings
-// column base width
-$column-basis: 10 !default;
 
 // enable responsive baseline & type scaling.
 // increases root font size from each breakpoint, starting from the min size specified in $rootsizes below
@@ -68,9 +71,6 @@ $baseline-scaling: false !default;
 // for best results, declare spacing and leading using unitless numbers in typeset mixin
 // can be disabled per-typeset mixin by passing last paramter ($snap) as false
 $baseline-snap: true !default;
-
-// optional: set a minimum size for all typeset typography
-$min-font-size: false !default;
 
 // map for flexible retrieval of breakpoint info
 $breakpoint-map: (
@@ -117,17 +117,13 @@ $breakpoint-count: length(map-keys($breakpoint-map)) !default;
 // breakpoint names
 $breaks: map-keys($breakpoint-map) !default;
 
-// rootsizes
-$sizes: () !default;
-@each $break in $breaks {
-    $sizes: join($sizes, map-get(map-get($breakpoint-map, $break), rootsize));
-}
-
 // set the initial breakpoint information referenced by type mixins
 // you can use these to retrieve current breakpoint info within breakpoint mixins
 $current-breakpoint: 0 !default;
 $current-rootsize: map-get(map-get($breakpoint-map, 0), rootsize) !default;
 
+// optional: set a minimum size for all typeset typography
+$min-font-size: false !default;
 
 
 
@@ -143,7 +139,7 @@ $sans: (
     font-family: '"Helvetica Neue", Arial, sans-serif',
     regular: normal,
     bold: bold,
-    cap-height: 0.735
+    cap-height: 0.71
 ) !default;
 
 $serif: (
@@ -153,8 +149,26 @@ $serif: (
     cap-height: 0.69
 ) !default;
 
-$monospace-type: (
+$monospace: (
     font-family: 'Menlo, Courier, monospace',
     regular: 400,
     cap-height: 0.68
 ) !default;
+
+
+// ===================================
+// Read-only
+// ===================================
+// These values override defaults and should not be edited directly in your project
+
+// Available Susy settings - overrides Susy default config
+// To affect this setup access the custom $susy variables instead (under "Breakpoints & Grid")
+$susy: (
+    math: $susy-math,
+    global-box-sizing: $susy-global-box-sizing,
+    gutter-position: $susy-gutter-position,
+    container-position: $susy-container-position,
+    debug: (
+        color: $susy-debug-color
+    )
+);

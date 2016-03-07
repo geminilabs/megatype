@@ -8,54 +8,36 @@
 
 // debug breakpoints
 @mixin debug-breakpoints{
-    body {
-        // margin-bottom: 2rem;
+    @if $debug-breakpoints == true and $debug-allow == true {
 
-        &:before {
-            display: block;
-            position: fixed;
-            box-sizing: border-box;
-            bottom: 0;
-            animation-fill-mode: both;
-            @include rem(height, 2rem);
-            @include rem(line-height, 2rem);
-            text-align: center;
-            background-color: $debug-color;
-            background-color: transparentize($debug-color, 0.15);
-            color: #fff;
-            font-size: 14px;
-            z-index: 10000;
-            @include rem(padding, 0 2rem);
-            border: 1px solid lighten($debug-color, 10%);
-            text-shadow: 0 -1px 0 darken($debug-color, 25%);
-            animation: breakpoint-info-in 0.75s $easeOutCubic;
-            left: 50%;
-            transform: translateX(-50%) translateZ(0);
-            width: 100%;
+        body {
+            &:before {
+                display: block;
+                box-sizing: border-box;
+                animation-fill-mode: both;
+                min-height: 3em;
+                line-height: 1.6;
+                text-align: center;
+                background-color: $debug-base;
+                background-color: transparentize($debug-base, 0.15);
+                color: #fff;
+                font-size: $debug-size;
+                z-index: 10000;
+                padding: 0.75em 2em;
+                text-shadow: 0 -1px 0 darken($debug-base, 25%);
+                animation: debug-in 0.75s $easeOutCubic;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                font-feature-settings: "kern" 1, "onum" 0, "lnum" 1, "liga" 1;
+                font-family: font-family-of($monospace);
+                -webkit-font-smoothing: subpixel-antialiased;
 
-            @each $break in $breaks {
-                @include breakpoint-layout($break) {
-                    content: "#{$break} ---- cols: #{break-get($break, cols)} ---- start: #{break-get($break, start)} ---- max-width: #{break-get($break, max)}";
+                @include all-breakpoints {
+                    content: "breakpoint: #{$current-breakpoint} --- cols: #{break-get($current-breakpoint, cols)} --- start: #{break-get($current-breakpoint, start)} --- max-width: #{break-get($current-breakpoint, max)} --- gutter: #{break-get($current-breakpoint, gutter)}";
                 }
             }
-        }
-    }
-
-    @keyframes breakpoint-info-in {
-        0% {
-            transform: translateY(100%) translateX(-50%) translateZ(0);
-        }
-        100% {
-            transform: translateX(-50%) translateZ(0);
-        }
-    }
-
-    @keyframes breakpoint-marker-in {
-        0% {
-            transform: translateY(100%) translateX(-50%) translateZ(0);
-        }
-        100% {
-            transform: translateX(-50%) translateZ(0);
         }
     }
 }
@@ -63,32 +45,134 @@
 
 // debug grid
 @mixin debug-grid {
-    html {
-        // background: url('../images/placeholder/grid.png') center 0 repeat #fff;
+    @if $debug-grid == true and $debug-allow == true {
+        html {
+            @include all-breakpoints {
+                background:
+                    // vertical grid starts at 0
+                    linear-gradient(to bottom,
+                        transparentize(darken($debug-base, 5%), 0.4) 1px,
+                        transparent 1px, transparent $current-rootsize),
+                    // for horizontal grid, starts at center, is more complex to draw
+                    linear-gradient(to right,
+                        transparent 0px,
+                        transparent $current-rootsize / 2 - 1px,
+                        transparentize(darken($debug-base, 5%), 0.875) $current-rootsize / 2 - 1px,
+                        transparentize(darken($debug-base, 5%), 0.875) $current-rootsize / 2,
+                        transparent $current-rootsize / 2,
+                        transparent $current-rootsize);
+                background-repeat: repeat;
+                background-position: center top;
+                background-size: $current-rootsize $current-rootsize;
+            }
+        }
 
-        @include all-breakpoints {
-            background:
-                // vertical grid starts at 0
-                linear-gradient(to bottom, transparentize(darken($debug-color, 5%), 0.5) 1px, transparent 1px, transparent $current-rootsize),
-                // for horizontal grid, starts at center, is more complex to draw
-                linear-gradient(to right,
-                    transparent 0px,
-                    transparent $current-rootsize / 2 - 1px,
-                    transparentize(darken($debug-color, 5%), 0.5) $current-rootsize / 2 - 1px,
-                    transparentize(darken($debug-color, 5%), 0.5) $current-rootsize / 2,
-                    transparent $current-rootsize / 2,
-                    transparent $current-rootsize);
-            background-repeat: repeat;
-            background-position: center top;
-            background-size: $current-rootsize $current-rootsize;
+        body {
+            background-color: transparent;
+
+            > * {
+                opacity: 0.75;
+            }
         }
     }
+}
 
-    body {
-        background-color: transparent;
+// debug site root size
+@mixin debug-rootsize($sizes) {
+    @if $debug-allow == true and $debug-baseline == true {
+        &:after {
+            content: 'rootsize: ' + nth($sizes, 1) + ' (' + nth($sizes, 1) / 16px * 100% + ')';
+            display: inline-block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: auto;
+            background-color: $debug-base;
+            background-color: transparentize($debug-base, 0.15);
+            color: white;
+            animation: debug-in 0.75s $easeOutCubic;
+            margin-left: 0;
+            padding: 0 1em;
+            line-height: 3em;
+            border-bottom-right-radius: 0.5em;
+            font-size: $debug-size;
+            font-family: font-family-of($monospace);
+            -webkit-font-smoothing: subpixel-antialiased;
 
-        > * {
-            opacity: 0.75;
+            @include all-breakpoints {
+                content: 'rootsize: ' + break-get($current-breakpoint, rootsize) + ' (' + break-get($current-breakpoint, rootsize) / 16px * 100% + ')';
+            }
         }
+    }
+}
+
+// debug typeset typography
+@mixin debug-type($type-top, $type-bottom, $type-space, $color-space, $color-type) {
+    @if $debug-allow == true and $debug-baseline == true {
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            box-sizing: border-box;
+        }
+
+        &:before {
+            top: px-to-rem(-1 * $type-top + 1px);
+            bottom: px-to-rem(-1 * $type-bottom + $type-top);
+            background: transparentize($color-space, 0.7);
+            outline: 1px solid transparentize(darken(mix($color-type, $color-space), 10%), 0);
+        }
+
+        &:after {
+            top: px-to-rem($type-space);
+            bottom: px-to-rem($type-space);
+            background: transparentize($color-type, 0.7);
+        }
+
+        // &:nth-child(2n) {
+        //     &:before {
+        //         background: transparentize($color-type, 0.7);
+        //         border: 1px solid transparentize($color-space, 0.65);
+        //     }
+        //     &:after {
+        //         background: transparentize($color-space, 0.7);
+        //     }
+        // }
+    }
+    // *:nth-child(2n) > & {
+    //     &:before {
+    //         background: transparentize($color-type, 0.7);
+    //         border: 1px solid transparentize($color-space, 0.65);
+    //     }
+    //     &:after {
+    //         background: transparentize($color-space, 0.7);
+    //     }
+
+    //     &:nth-child(2n) {
+    //         &:before {
+    //             background: transparentize($color-space, 0.7);
+    //             border: 1px solid transparentize($color-type, 0.65);
+    //         }
+    //         &:after {
+    //             background: transparentize($color-type, 0.7);
+    //         }
+    //     }
+    // }
+}
+
+@if $debug-columns == true and $debug-allow == true {
+    img { opacity: 0.75; }
+}
+
+// fade in
+@keyframes debug-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

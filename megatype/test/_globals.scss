@@ -5,10 +5,11 @@
 // Megatype: https://github.com/StudioThick/megatype
 // =====================================================
 
+@include megatype;
+
 * {
     box-sizing: border-box;
 }
-
 
 html, body {
     height: 100%;
@@ -17,65 +18,24 @@ html, body {
     background-color: site-color(white);
 }
 
+// Site-wide base styles.
 html {
-    @include rootsize;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    line-height: 2rem;
+    font-family: font-family-of($serif);
+    font-style: normal;
 }
 
 .page {
-    @extend %container;
-    background-color: red;
-}
+    @include set-container;
 
-@if $debug-breakpoints == true and $debug-allow == true {
-    @include debug-breakpoints;
-}
-
-@if $debug-grid == true and $debug-allow == true {
-    @include debug-grid;
-}
-
-@if $debug-columns == true and $debug-allow == true {
-    img { opacity: 0.75; }
-}
-
-
-img {
-    -ms-interpolation-mode: bicubic;
-    height: auto;
-    vertical-align: middle;
-    max-width: 100%;
-
-    .no-svg & {
-        display: none; // testing gulp-modernizr
+    @include all-breakpoints {
+        padding: 4rem gutter() / 2;
     }
-
-    &.inject-me {
-        opacity: 0;
-    }
-}
-
-
-// sensible defaults for svgs so they display well across browsers
-svg {
-    max-width: 99.8%; // not 100% - to avoid clipping in some scenarios
-    max-height: 99.8%;
-
-    &.injected-svg {
-        animation: fade-in 0.125s ease 1 both;
-    }
-
-    .fill, * {
-        fill: inherit;
-    }
-
-    .stroke {
-        stroke: inherit;
-    }
-}
-
-use {
-    fill: inherit;
-    fill: currentColor;
 }
 
 // common animation keyframes
@@ -107,3 +67,19 @@ use {
     font-family: font-family-of($serif);
 }
 
+.sidebar {
+    @include min-width(2) {
+        padding-top: 2rem;
+        margin-bottom: 2rem;
+        @include span(2 last);
+    }
+    @include min-width(3) {
+        padding-top: 1rem;
+    }
+    @include min-width(4) {
+        padding-top: 0;
+    }
+    @include min-width(3 4) {
+        @include span(4 last);
+    }
+}

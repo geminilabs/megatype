@@ -40,71 +40,54 @@
 
 // Root font-size in %, outputted in correct breakpoints.
 @mixin rootsize {
-    $min-size: nth($sizes, 1);
-    $max-size: nth($sizes, 2);
-    $min-width: break-get(nth($breaks, 2), start) / 2;
-    $max-width: break-get(nth($breaks, 2), start);
-
-    font-size: $min-size / 16px * 100%;
-
-    @debug $current-breakpoint $min-size $max-size;
-
-    @if ($baseline-scaling == true) {
-        @media screen and (min-width: px-to-em(break-get(nth($breaks, 2), start) / 2)) {
-            font-size: calc(#{$min-size} + #{no-unit($max-size) - no-unit($min-size)} * (100vw - #{$min-width}) / #{no-unit($max-width) - no-unit($min-width)});
-        }
+    // we will want to update this value before calculating rootsize, just in case it's updated by the user
+    $sizes: ();
+    @each $break in $breaks {
+        $sizes: join($sizes, map-get(map-get($breakpoint-map, $break), rootsize));
     }
 
-    // Loop through breakpoints.
-    @for $i from 2 through $breakpoint-count {
-        @include min-width($i - 1) {
-            $min-size: nth($sizes, $i);
-            $min-width: break-get(nth($breaks, $i), start);
+    html {
+        $min-size: nth($sizes, 1);
+        $max-size: nth($sizes, 2);
+        $min-width: break-get(nth($breaks, 2), start) / 2;
+        $max-width: break-get(nth($breaks, 2), start);
 
-            font-size: $min-size / 16px * 100%;
+        font-size: $min-size / 16px * 100%;
 
-            @if ($baseline-scaling == true) {
-                @if $i < $breakpoint-count {
-                    $max-size: nth($sizes, $i + 1);
-                    $max-width: break-get(nth($breaks, $i + 1), start);
-                } @else {
-                    // largest breakpoint. Keep the scaling consitent with the previous breakpoint
-                    $size-diff: nth($sizes, $i) - nth($sizes, $i - 1);
-                    $width-diff: break-get(nth($breaks, $i), start) - break-get(nth($breaks, $i - 1), start);
-                    $max-size: nth($sizes, $i) + $size-diff;
-                    $max-width: break-get(nth($breaks, $i), start) + $width-diff;
-                }
-
+        @if ($baseline-scaling == true) {
+            @media screen and (min-width: px-to-em(break-get(nth($breaks, 2), start) / 2)) {
                 font-size: calc(#{$min-size} + #{no-unit($max-size) - no-unit($min-size)} * (100vw - #{$min-width}) / #{no-unit($max-width) - no-unit($min-width)});
             }
         }
-    }
 
-    @if $debug-allow == true and $debug-baseline == true {
-        body {
-            &:after {
-                content: 'rootsize: ' + nth($sizes, 1) + ' (' + nth($sizes, 1) / 16px * 100% + ')';
-                display: inline-block;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: auto;
-                background-color: $debug-color;
-                background-color: transparentize($debug-color, 0.15);
-                color: white;
-                animation: none;
-                margin-left: 0;
-                padding: 0.3rem 0.5rem 0.5rem;
-                border-bottom-right-radius: 0.25em;
-                font-size: 14px;
+        // Loop through breakpoints.
+        @for $i from 2 through $breakpoint-count {
+            @include min-width($i - 1) {
+                $min-size: nth($sizes, $i);
+                $min-width: break-get(nth($breaks, $i), start);
 
-                @for $i from 2 through $breakpoint-count {
-                    @include min-width($i - 1) {
-                        content: 'rootsize: ' + nth($sizes, $i) + ' (' + nth($sizes, $i) / 16px * 100% + ')';
+                font-size: $min-size / 16px * 100%;
+
+                @if ($baseline-scaling == true) {
+                    @if $i < $breakpoint-count {
+                        $max-size: nth($sizes, $i + 1);
+                        $max-width: break-get(nth($breaks, $i + 1), start);
+                    } @else {
+                        // largest breakpoint. Keep the scaling consitent with the previous breakpoint
+                        $size-diff: nth($sizes, $i) - nth($sizes, $i - 1);
+                        $width-diff: break-get(nth($breaks, $i), start) - break-get(nth($breaks, $i - 1), start);
+                        $max-size: nth($sizes, $i) + $size-diff;
+                        $max-width: break-get(nth($breaks, $i), start) + $width-diff;
                     }
+
+                    font-size: calc(#{$min-size} + #{no-unit($max-size) - no-unit($min-size)} * (100vw - #{$min-width}) / #{no-unit($max-width) - no-unit($min-width)});
                 }
             }
         }
+    }
+
+    body {
+        @include debug-rootsize($sizes);
     }
 }
 
@@ -119,7 +102,7 @@
 
 // Set type, measuring from baseline and cap-height
 // output is affected by $baseline-snap config; will snap to nearest baseline if so
-@mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap) {
+@mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap, $debug-element: false) {
     $context: index($breaks, $current-breakpoint);
 
     // Lets write some tests first
@@ -160,8 +143,14 @@
     @if unitless($trailer) == false and unit($trailer) != "px" and unit($trailer) != "rem" {
         @error "#{$trailer} is not a valid format for the typeset mixin: $trailer must be provided as unitless, px, or rem";
     }
-    // With our tests for valid input out of the way, we are free to proceed
 
+    // check min-font-size, if provided
+    @if $min-font-size != false {
+        @if unitless($min-font-size) == false and unit($min-font-size) != "px" and unit($min-font-size) != "rem" {
+            @error "#{$min-font-size} is not a valid format : $min-font-size must be provided as unitless, px, or rem";
+        }
+    }
+    // With our tests for valid input out of the way, we are free to proceed
 
     // Start by converting all unitless values to rem, and then to pixels
     // If unitless values provided, convert to rem (remember; 1rem = 1 baseline unit)
@@ -171,12 +160,20 @@
     @if unitless($lineheight) {
         $lineheight: $lineheight * 1rem;
     }
+    // only convert leader and trailer if snap is off
     @if unitless($leader) {
         $leader: $leader * 1rem;
     }
     @if unitless($trailer) {
         $trailer: $trailer * 1rem;
     }
+    @if $min-font-size != false {
+        @if unitless($min-font-size) {
+            $min-font-size: $min-font-size * 1rem;
+        }
+    }
+
+
 
     // With universal rem values, it's now easy to convert to px
     // We will work in px for most of the rest of this mixin, and convert back to rem at the end
@@ -192,10 +189,22 @@
     @if unit($trailer) == "rem" {
         $trailer: rem-to-px($trailer);
     }
+    @if $min-font-size != false {
+        @if unit($min-font-size) == "rem" {
+            $min-font-size: rem-to-px($min-font-size);
+        }
+    }
+
+    // if min-font-size has been provided, let's first do a quick cheack against that, and modify our fontsize if required
+    // this can be helpful for accessibility reasons
+    @if $min-font-size != false {
+        @if $fontsize < $min-font-size {
+            $fontsize: $min-font-size;
+        }
+    }
 
     // We also need to store our cap-height
     $cap-height: map-get($font, cap-height);
-
 
     // Let's set our font-size in rems
     $fs-rem: px-to-rem($fontsize);
@@ -242,10 +251,8 @@
         // calculate remainder of top value that doesn't sit on grid. we need to correct for this
         $modulo: ($leader + $lineheight - 2 * $type-space) % $current-rootsize;
 
-
         @if ($modulo < $current-rootsize / 2) {
             $shift: -$modulo;
-            $trailer: $trailer - $current-rootsize;
         } @else {
             $shift: $current-rootsize - $modulo;
         }
@@ -255,7 +262,7 @@
 
     // $type-top: $leader;
     $type-top: $leader - $type-space + $shift;
-    $type-bottom: $trailer - $type-space + $leader;
+    $type-bottom: $trailer - $type-space + $type-top;
 
     @if $snap == true {
         $type-bottom: rem-to-px(round(px-to-rem($type-bottom)));
@@ -279,11 +286,15 @@
         margin-bottom: px-to-rem($type-bottom);
     }
 
-    // tried to write a test to validate baseline... not working just yet
-    // $snap-check: ($type-top + $fontsize + $type-bottom) % $current-rootsize;
-    // @if $snap-check - $current-rootsize > 2px or $snap-check - $current-rootsize < -2px {
-    //     @debug "($type-top + $lineheight + $type-bottom) % $current-rootsize = #{$snap-check}: baseline grid might not be calculating correctly at breakpoint #{$current-breakpoint}"
-    // }
+    // Test to validate resulting baseline.
+    // should warn user if baseline math outputs something unexpected
+    // tolerance is 1px by default, can be set in config, see $debug-tolerance variable
+    @if $snap == true {
+        $snap-check: rem-to-px(($fs-rem * $lh-integer + px-to-rem($type-bottom))) % $current-rootsize;
+        @if $snap-check > $debug-tolerance or $snap-check < -$debug-tolerance {
+            @warn "baseline grid appears to be calculated off by #{$snap-check} at breakpoint #{$current-breakpoint} ($debug-tolerance: #{$debug-tolerance})"
+        }
+    }
 
 
     // Now let's set a few handy helpers for nested links
@@ -297,31 +308,7 @@
         @extend %typeset-child;
     }
 
-    @if $debug-allow == true and $debug-baseline == true {
-        &:before,
-        &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            width: 100%;
-            left: 0;
-            box-sizing: border-box;
-        }
-
-        &:before {
-            top: px-to-rem(-1 * $type-top);
-            bottom: px-to-rem(-1 * $type-bottom + $type-top);
-
-            background: transparentize(yellow, 0.7);
-            border: 1px solid transparentize(turquoise, 0.6);
-        }
-
-        &:after {
-            top: px-to-rem($type-space);
-            bottom: px-to-rem($type-space);
-            background: transparentize(turquoise, 0.7);
-        }
-    }
+    @include debug-type($type-top, $type-bottom, $type-space, $debug-type, $debug-spacing);
 }
 
 // resets type, negates type rhythm
@@ -336,4 +323,11 @@
             content: none;
         }
     }
+}
+
+// initialise megatype
+@mixin megatype {
+    @include rootsize;
+    @include debug-breakpoints;
+    @include debug-grid;
 }
