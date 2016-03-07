@@ -111,6 +111,8 @@ $breakpoint-map: (
     )
 ) !default;
 
+// optional: set a minimum size for all typeset typography
+$min-font-size: false !default;
 
 // breakpoint count
 $breakpoint-count: length(map-keys($breakpoint-map)) !default;
@@ -122,6 +124,7 @@ $breaks: map-keys($breakpoint-map) !default;
 // you can use these to retrieve current breakpoint info within breakpoint mixins
 $current-breakpoint: 0 !default;
 $current-rootsize: map-get(map-get($breakpoint-map, 0), rootsize) !default;
+
 
 
 
