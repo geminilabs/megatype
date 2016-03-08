@@ -135,7 +135,8 @@ $monospace: (
 ) !default;
 ```
 To set `cap-height`; It's recommended just to tweak this by trial and error until a typefece sits nicely on the baseline.    
-*Tip:* set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.   
+   
+**Tip:** set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.   
 
 
 ###Setting type
@@ -202,7 +203,7 @@ And these can be toggled on and off all at once in `megatype.scss`:
 $debug-allow: true;
 ```
 
-Note: Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues these can get out of sync with some configs at long distances (on long typeset pages, for example). This is expected behaviour;
+**Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues these can get out of sync with some configs at long distances (on long typeset pages, for example). This is expected behaviour;
 
 
 ###Extras
@@ -218,4 +219,4 @@ A few extra goodies.
 - Bower & Node packages
 - Demo page
 - Tests
-- Default configs?
+- Default config templates?
