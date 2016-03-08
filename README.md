@@ -30,7 +30,8 @@ And import into your styles with:
 `@import "megatype";`    
 
 ##Using MegaType
-MegaType provides typesetting tools, breakpoint mixins, and layout helpers from [Susy 2](http://susy.oddbird.net/)    
+MegaType provides typesetting tools, breakpoint mixins, and layout helpers from [Susy 2](http://susy.oddbird.net/).    
+
 
 ###Config
 It's recommended to copy `_config.scss` into your code base and override the `!default` settings where required, leaving unmodified values commented out.    
@@ -86,22 +87,21 @@ $breakpoint-map: (
 );
 
 ```
-``
 Breaking down the map:    
 `cols` is the number of Susy grid columns for this layout. Can be an integer or [Susy column list](http://susydocs.oddbird.net/en/latest/settings/#columns).    
 `start` is the start position of the breakpoint. Can be `px` or `em`.    
 `max` is the max width of the container. Can be `px`, `em`, or `%`.   
 `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.     
 `gutter` is the size of our grid gutters. Can be `px` or `rem`.   
-
-These values can be retreived easily using the `break-get` function, eg:
+    
+These values can be retreived easily using the `break-get` function, eg:    
 ```scss
 width: break-get(3, max-width);
 ```
 
 To intialise the baseline, call MegaType at the top of your code:   
-`@include megatype;`
-You may also wish to apply `max` widths to any content you wish to be contained:   
+`@include megatype;`   
+You may also wish to apply `max` widths from your config to any content you wish to be contained:     
 ```scss
 .my-container {
     @include set-container;
@@ -134,7 +134,8 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set `cap-height`; It's recommended just to tweak this by trial and error until a typefece sits nicely on the baseline. Tip: set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.
+To set `cap-height`; It's recommended just to tweak this by trial and error until a typefece sits nicely on the baseline.    
+*Tip:* set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.   
 
 
 ###Setting type
@@ -181,8 +182,9 @@ There is also a `max-width` mixin available, but this will always use the smalle
 
 Both of these mixins can also accept `px` values for a custom media query shortcut, but these will use the settings from breakpoint `0` so should be avoided when setting type with `typeset`
 
+
 ###Debugging
-MegaType contains extensive debugging tools to let you visualise your type and grid settings:
+MegaType contains extensive debugging tools to let you visualise your type and grid setup. This is turned on by default.
 
 ```scss
 // debug susy columns
@@ -200,6 +202,9 @@ And these can be toggled on and off all at once in `megatype.scss`:
 $debug-allow: true;
 ```
 
+Note: Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues these can get out of sync with some configs at long distances (on long typeset pages, for example). This is expected behaviour;
+
+
 ###Extras
 A few extra goodies.
 - See `_typography.scss` for some functions that can easily return information from your typeface configs.
@@ -210,6 +215,7 @@ A few extra goodies.
 
 
 ## Roadmap
+- Bower & Node packages
 - Demo page
 - Tests
-- Default config templates?
+- Default configs?
