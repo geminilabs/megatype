@@ -3,9 +3,9 @@ Execute typographic structure with ease
 
 ##Install
 Can be installed as a node module or bower component:    
-`npm install megatype --save-dev`    
+```npm install megatype --save-dev```   
 or    
-`bower install megatype --save-dev`    
+```bower install megatype --save-dev```    
 
 Then add a load path to your build process of choice (gulp example shown):    
 ```js
@@ -27,7 +27,9 @@ gulp.task('styles', () => {
 ```
 
 And import into your styles with:      
-`@import "megatype";`    
+```scss
+@import "megatype";
+```    
 
 ##Using MegaType
 MegaType provides typesetting tools, breakpoint mixins, and layout helpers from [Susy 2](http://susy.oddbird.net/).    
@@ -88,19 +90,24 @@ $breakpoint-map: (
 
 ```
 Breaking down the map:    
-`cols` is the number of Susy grid columns for this layout. Can be an integer or [Susy column list](http://susydocs.oddbird.net/en/latest/settings/#columns).    
-`start` is the start position of the breakpoint. Can be `px` or `em`.    
-`max` is the max width of the container. Can be `px`, `em`, or `%`.   
-`rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.     
-`gutter` is the size of our grid gutters. Can be `px` or `rem`.   
+- `cols` is the number of Susy grid columns for this layout. Can be an integer or [Susy column list](http://susydocs.oddbird.net/en/latest/settings/#columns).    
+- `start` is the start position of the breakpoint. Can be `px` or `em`.    
+- `max` is the max width of the container. Can be `px`, `em`, or `%`.   
+- `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.     
+- `gutter` is the size of our grid gutters. Can be `px` or `rem`.   
     
 These values can be retreived easily using the `break-get` function, eg:    
 ```scss
-width: break-get(3, max-width);
+.my-component {
+    width: break-get(3, max-width);
+}
 ```
 
 To intialise the baseline, call MegaType at the top of your code:   
-`@include megatype;`   
+```scss
+@include megatype;
+```
+
 You may also wish to apply `max` widths from your config to any content you wish to be contained:     
 ```scss
 .my-container {
