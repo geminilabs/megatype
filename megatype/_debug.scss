@@ -1,7 +1,7 @@
 // =====================================================
 // --------------- Megatype debug mixins ---------------
 // =====================================================
-// @author Thomas Bredin-Grey <tom@studiothick>
+// @author Thomas Bredin-Grey <tom@studiothick.com>
 // Megatype: https://github.com/StudioThick/megatype
 // =====================================================
 
@@ -131,36 +131,7 @@
             bottom: px-to-rem($type-space);
             background: transparentize($color-type, 0.7);
         }
-
-        // &:nth-child(2n) {
-        //     &:before {
-        //         background: transparentize($color-type, 0.7);
-        //         border: 1px solid transparentize($color-space, 0.65);
-        //     }
-        //     &:after {
-        //         background: transparentize($color-space, 0.7);
-        //     }
-        // }
     }
-    // *:nth-child(2n) > & {
-    //     &:before {
-    //         background: transparentize($color-type, 0.7);
-    //         border: 1px solid transparentize($color-space, 0.65);
-    //     }
-    //     &:after {
-    //         background: transparentize($color-space, 0.7);
-    //     }
-
-    //     &:nth-child(2n) {
-    //         &:before {
-    //             background: transparentize($color-space, 0.7);
-    //             border: 1px solid transparentize($color-type, 0.65);
-    //         }
-    //         &:after {
-    //             background: transparentize($color-type, 0.7);
-    //         }
-    //     }
-    // }
 }
 
 @if $debug-columns == true and $debug-allow == true {

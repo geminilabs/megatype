@@ -1,7 +1,7 @@
 // =====================================================
 // ------------------ Megatype config ------------------
 // =====================================================
-// @author Thomas Bredin-Grey <tom@studiothick>
+// @author Thomas Bredin-Grey <tom@studiothick.com>
 // Megatype: https://github.com/StudioThick/megatype
 // =====================================================
 
@@ -37,13 +37,13 @@ $debug-color: #f54848 !default;
 $debug-type: yellow !default;
 $debug-spacing: turquoise !default;
 
-// debug-size
+// size of debug text
 $debug-size: 12px !default;
 
 // grid opacity, for debugging columns
 $grid-opacity: 0.1 !default;
 
-// limit where baselkine will report warnings
+// limit where baseline will report warnings
 $debug-tolerance: 1px;
 
 
