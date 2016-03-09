@@ -57,8 +57,8 @@
                     linear-gradient(to right,
                         transparent 0px,
                         transparent $current-rootsize / 2 - 1px,
-                        transparentize(darken($debug-base, 5%), 0.875) $current-rootsize / 2 - 1px,
-                        transparentize(darken($debug-base, 5%), 0.875) $current-rootsize / 2,
+                        transparentize(darken($debug-base, 5%), 0.9) $current-rootsize / 2 - 1px,
+                        transparentize(darken($debug-base, 5%), 0.9) $current-rootsize / 2,
                         transparent $current-rootsize / 2,
                         transparent $current-rootsize);
                 background-repeat: repeat;
@@ -109,27 +109,29 @@
 // debug typeset typography
 @mixin debug-type($type-top, $type-bottom, $type-space, $color-space, $color-type) {
     @if $debug-allow == true and $debug-baseline == true {
-        &:before,
-        &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            width: 100%;
-            left: 0;
-            box-sizing: border-box;
-        }
+        &:hover {
+            &:before,
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 100%;
+                left: 0;
+                box-sizing: border-box;
+            }
 
-        &:before {
-            top: px-to-rem(-1 * $type-top + 1px);
-            bottom: px-to-rem(-1 * $type-bottom + $type-top);
-            background: transparentize($color-space, 0.7);
-            outline: 1px solid transparentize(darken(mix($color-type, $color-space), 10%), 0);
-        }
+            &:before {
+                top: px-to-rem(-1 * $type-top + 1px);
+                bottom: px-to-rem(-1 * $type-bottom + $type-top);
+                background: transparentize($color-space, 0.7);
+                outline: 1px solid transparentize(darken(mix($color-type, $color-space), 10%), 0);
+            }
 
-        &:after {
-            top: px-to-rem($type-space);
-            bottom: px-to-rem($type-space);
-            background: transparentize($color-type, 0.7);
+            &:after {
+                top: px-to-rem($type-space);
+                bottom: px-to-rem($type-space);
+                background: transparentize($color-type, 0.7);
+            }
         }
     }
 }
