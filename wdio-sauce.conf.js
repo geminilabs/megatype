@@ -48,21 +48,29 @@ exports.config = {
     //
     capabilities: [{
         browserName: 'chrome',
-            version: '42.0',
-            platform: 'Windows 8',
-            name: 'Example using wdio + saucelabs - Chrome V42.0 on Win8'
-        },
-        {
-         browserName: 'internet explorer',
-            version: '10.0',
-            platform: 'Windows 7',
-            name: 'Example using wdio + saucelabs - IE V10.0 on Win7'
+            version: '48.0',
+            platform: 'OS X 10.11',
+            name: 'Chrome V48.0 on El Capitan'
         },
         {
             browserName: 'safari',
-            version: '8.0',
+            version: '9.0',
+            platform: 'OS X 10.11',
+            name: 'safari V9 on El Capitan'
+        },
+        {
+            browserName: 'ie11',
+            version: '11.0',
+            platform: 'Windows 10',
+            name: 'ie11 on Windows 10'
+        },
+        {
+            browserName: 'iphone6',
+            version: '9.2',
             platform: 'OS X 10.10',
-            name: 'Example using wdio + saucelabs - Safari V8.0 on OSX10.10'
+            deviceName: 'iPhone 6',
+            deviceOrientation: 'portrait',
+            name: 'dafari on iphone 6 ios 9.2'
         }
     ],
     //
