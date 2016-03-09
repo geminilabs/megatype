@@ -102,7 +102,7 @@
 
 // Set type, measuring from baseline and cap-height
 // output is affected by $baseline-snap config; will snap to nearest baseline if so
-@mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap, $debug-element: false) {
+@mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap) {
     $context: index($breaks, $current-breakpoint);
 
     // Lets write some tests first
@@ -300,8 +300,8 @@
     // Now let's set a few handy helpers for nested links
     // set background position for link underlines
     &, a {
-        background-position: 0 round($fontsize * $cap-height + $type-space / 2);
-        background-position: 0 calc(50% + #{$fontsize * $cap-height / 2 - 1px});
+        background-position: 0 round($fontsize + $type-space + $link-offset);
+        background-position: 0 calc(50% + #{$fontsize + $type-space + $link-offset});
     }
 
     a {
