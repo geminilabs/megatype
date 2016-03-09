@@ -59,13 +59,13 @@ exports.config = {
             name: 'safari V9 on El Capitan'
         },
         {
-            browserName: 'ie11',
+            browserName: 'internet explorer',
             version: '11.0',
             platform: 'Windows 10',
             name: 'ie11 on Windows 10'
         },
         {
-            browserName: 'iphone6',
+            browserName: 'iphone',
             version: '9.2',
             platform: 'OS X 10.10',
             deviceName: 'iPhone 6',
