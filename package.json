@@ -11,7 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.1.1",
-    "babel-core": "^5.5.6",
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-preset-es2015": "*",
     "browser-sync": "^2.11.1",
     "del": "^2.2.0",
     "gulp": "^3.9.0",
@@ -26,10 +28,19 @@
     "gulp-sass": "^2.0.4",
     "gulp-shell": "^0.5.0",
     "gulp-size": "^2.0.0",
+    "gulp-webdriver": "^1.0.3",
     "postcss-assets": "^4.0.1",
-    "run-sequence": "^1.1.5"
+    "run-sequence": "^1.1.5",
+    "wdio-dot-reporter": "0.0.5",
+    "wdio-mocha-framework": "^0.2.11",
+    "wdio-sauce-service": "^0.2.2"
   },
   "dependencies": {
     "susy": "^2.2.12"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   }
 }

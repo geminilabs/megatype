@@ -11,6 +11,10 @@ var paths = {
 };
 
 
+gulp.task('test:e2e', () => {
+    return gulp.src('wdio.conf.js').pipe($.webdriver());
+});
+
 // =======================================================================
 // Styles: compiles sass, autoprefixes, and combines media queries
 // =======================================================================
