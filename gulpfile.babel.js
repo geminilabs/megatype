@@ -12,7 +12,7 @@ var paths = {
 
 
 gulp.task('test:e2e', () => {
-    return gulp.src('wdio.conf.js').pipe($.webdriver());
+    return gulp.src('wdio' + (process.env.NODE_ENV === 'test' ? '-sauce' : '') + '.conf.js').pipe($.webdriver());
 });
 
 // =======================================================================
