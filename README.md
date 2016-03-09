@@ -1,5 +1,7 @@
 # ℳegatype
-Execute typographic structure with ease    
+Execute typographic structure with ease
+
+[![Build Status](https://travis-ci.org/StudioThick/megatype.svg?branch=master)](https://travis-ci.org/StudioThick/megatype)
 
 ##Install
 Can be installed as a node module or bower component:    
