@@ -7,12 +7,40 @@ const $ = gulpLoadPlugins({
 });
 
 var paths = {
-	styles: 'megatype.scss'
+	styles: 'megatype.scss',
+	tests: './test'
 };
 
+// =======================================================================
+// Tests
+// =======================================================================
 
-gulp.task('test:e2e', () => {
-    return gulp.src('wdio' + (process.env.NODE_ENV === 'test' ? '-sauce' : '') + '.conf.js').pipe($.webdriver());
+gulp.task('test:styles', () => {
+	return gulp
+		.src(paths.tests + '/fixtures/test.scss')
+		.pipe(
+			$.sass({
+				outputStyle: 'expanded',
+				precision: 6,
+				includePaths: [
+					'./node_modules/susy/sass'
+				]
+			})
+			.on('error', $.sass.logError)
+		)
+		.pipe($.postcss([
+			require('autoprefixer')({browsers: ['last 3 versions', '> 5%', 'IE >= 9']})
+		]))
+		.pipe(gulp.dest(paths.tests + '/fixtures'))
+		.pipe($.size());
+});
+
+gulp.task('test:e2e', ['test:styles'], () => {
+    return gulp.src(
+    	'wdio' +
+    	(process.env.NODE_ENV === 'test' ? '-sauce' : '') +
+    	'.conf.js'
+    ).pipe($.webdriver());
 });
 
 // =======================================================================

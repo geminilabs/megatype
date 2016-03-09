@@ -1,0 +1,61 @@
+$baseline-scaling: false;
+$baseline-snap: true;
+$breakpoint-map: (
+    0: (
+        cols:       3,
+        start:      0px,
+        max:        420px,
+        rootsize:   12px,
+        gutter:     1rem
+    ),
+    1: (
+        cols:       3,
+        start:      480px,
+        max:        560px,
+        rootsize:   14px,
+        gutter:     1rem
+    ),
+    2: (
+        cols:       6,
+        start:      768px,
+        max:        840px,
+        rootsize:   16px,
+        gutter:     1.5rem
+    ),
+    3: (
+        cols:       9,
+        start:      980px,
+        max:        1080px,
+        rootsize:   18px,
+        gutter:     2rem
+    ),
+    4: (
+        cols:       12,
+        start:      1280px,
+        max:        100%,
+        rootsize:   20px,
+        gutter:     2rem
+    )
+);
+
+$sans: (
+    font-family: '"Helvetica Neue", Arial, sans-serif',
+    regular: normal,
+    bold: bold,
+    cap-height: 0.71
+) !default;
+
+$serif: (
+    font-family: 'Georgia, serif',
+    regular: normal,
+    bold: bold,
+    cap-height: 0.69
+) !default;
+
+$monospace: (
+    font-family: 'Menlo, Courier, monospace',
+    regular: 400,
+    cap-height: 0.68
+) !default;
+
+$debug-allow: true;
