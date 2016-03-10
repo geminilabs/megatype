@@ -1,0 +1,62 @@
+<div class="debugging">
+    <a href="#" class="button js-toggle-all">Toggle all</a>
+    <a href="#" class="button js-toggle-grid">Toggle grid</a>
+    <a href="#" class="button js-toggle-type">Toggle type</a>
+    <a href="#" class="button js-toggle-breakpoints">Toggle breakpoints</a>
+</div>
+
+<script type="text/javascript">
+    var toggleAll = document.querySelector('.js-toggle-all');
+    var toggleGrid = document.querySelector('.js-toggle-grid');
+    var toggleType = document.querySelector('.js-toggle-type');
+    var toggleBreakpoints = document.querySelector('.js-toggle-breakpoints');
+    var rootEl = document.querySelector('html');
+
+    var all;
+
+    checkState();
+
+    toggleAll.addEventListener("click", function(e) {
+        e.preventDefault();
+
+        if (all == true) {
+            rootEl.classList.remove('no-debug-grid');
+            rootEl.classList.remove('no-debug-type');
+            rootEl.classList.remove('no-debug-breakpoints');
+        } else {
+            rootEl.classList.add('no-debug-grid');
+            rootEl.classList.add('no-debug-type');
+            rootEl.classList.add('no-debug-breakpoints');
+        }
+        checkState();
+    });
+
+    toggleGrid.addEventListener("click", function(e) {
+        e.preventDefault();
+        rootEl.classList.toggle('no-debug-grid');
+        checkState();
+    });
+
+    toggleType.addEventListener("click", function(e) {
+        e.preventDefault();
+        rootEl.classList.toggle('no-debug-type');
+        checkState();
+    });
+
+    toggleBreakpoints.addEventListener("click", function(e) {
+        e.preventDefault();
+        rootEl.classList.toggle('no-debug-breakpoints');
+        checkState();
+    });
+
+    // will set toggle all state to off / on if all are on or off
+    function checkState() {
+        if (rootEl.className.indexOf('no-debug-grid') == -1 && rootEl.className.indexOf('no-debug-type') == -1 && rootEl.className.indexOf('no-debug-breakpoints') == -1) {
+            all = false;
+        }
+
+        if (rootEl.className.indexOf('no-debug-grid') != -1 && rootEl.className.indexOf('no-debug-type') != -1 && rootEl.className.indexOf('no-debug-breakpoints') != -1) {
+            all = true;
+        }
+    }
+</script>

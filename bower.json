@@ -1,0 +1,10 @@
+{
+  "name": "megatype",
+  "private": true,
+  "dependencies": {
+    "modernizr": "~2.8.1"
+  },
+  "devDependencies": {
+    "megatype": "~0.0.3"
+  }
+}

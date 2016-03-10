@@ -1,0 +1,46 @@
+.debugging {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    border-bottom-left-radius: 0.5em;
+    background-color: $debug-base;
+    background-color: transparentize($debug-base, 0.15);
+    text-shadow: 0 -1px 0 darken($debug-base, 25%);
+    color: white;
+    animation: debug-in 0.75s $easeOutCubic;
+    padding: 0 1em;
+    line-height: 3em;
+    font-size: $debug-size;
+    font-family: font-family-of($monospace);
+    -webkit-font-smoothing: subpixel-antialiased;
+    opacity: 1;
+}
+
+.no-debug-grid {
+    background: none;
+}
+
+.no-debug-breakpoints {
+    .page {
+        background-color: transparent;
+    }
+
+    body {
+        &:before,
+        &:after {
+            content: none;
+            display: none;
+        }
+    }
+}
+
+.no-debug-type {
+    h1,h2,h3,h4,h5,h6,p,li,blockquote {
+        &:before,
+        &:after {
+            content: none;
+            display: none !important;
+        }
+    }
+}

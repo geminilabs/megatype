@@ -1,0 +1,14 @@
+{% import "partials/head.html" as head %}
+
+<!DOCTYPE html>
+	{{ head.render(pageName) }}
+<body>
+    {% include "partials/debugging.html" %}
+
+	<div class="page">
+		{% block content %}
+
+		{% endblock %}
+  	</div>
+</body>
+</html>
