@@ -20,7 +20,8 @@ gulp.task('styles', () => {
 			outputStyle: 'expanded',
 			precision: 6,
 			includePaths: [
-				'./node_modules/susy/sass'
+				'./node_modules',
+				'./bower_components'
 			]
 		})
 		.on('error', $.sass.logError))

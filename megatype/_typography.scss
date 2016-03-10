@@ -308,7 +308,13 @@
         @extend %typeset-child;
     }
 
-    @include debug-type($type-top, $type-bottom, $type-space, $debug-type, $debug-spacing);
+    @if $debug-hover == true {
+        &:hover {
+            @include debug-type($type-top, $type-bottom, $type-space, $debug-cap, $debug-spacing);
+        }
+    } @else {
+        @include debug-type($type-top, $type-bottom, $type-space, $debug-cap, $debug-spacing);
+    }
 }
 
 // resets type, negates type rhythm
@@ -316,7 +322,7 @@
     top: auto;
     margin-bottom: 0;
 
-    @if $debug-allow == true and $debug-baseline == true {
+    @if $debug-allow == true and $debug-type == true {
         &:before,
         &:after {
             display: none;

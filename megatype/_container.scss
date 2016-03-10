@@ -5,68 +5,18 @@
 // Megatype: https://github.com/StudioThick/megatype
 // =====================================================
 
-
-// helper to calculate susy layout from a breakpoint variable
-@function calc-layout($break) {
-    $break-width: break-get($break, max);
-    $break-start: break-get($break, start);
-    $break-cols: break-get($break, cols);
-    $break-gutter: break-get($break, gutter);
-
-    // save initial unit
-    $max-unit: unit($break-width);
-
-    // handle percentages - base column width on the startpoint of the breakpoint instead
-    @if $max-unit == "%" {
-        @if $break-start != 0 and $break-start != 0px {
-            $break-width: break-get($break, start);
-        } @else {
-            // first breakpoint - use breakpoint 1 start width instead
-            $break-width: break-get($break + 1, start);
-        }
-    }
-
-    // update unit
-    $max-unit: unit($break-width);
-
-    // convert all to rem
-    @if $max-unit == "px" {
-        $break-width: px-to-rem($break-width, break-get($break, rootsize));
-    }
-    @if $max-unit == "em" {
-        $break-width: em-to-rem($break-width);
-    }
-
-    // calculate column width
-    $calc-cols: (($break-width - $break-gutter) / $break-cols) - $break-gutter;
-
-    // construct susy layout
-    $break-layout: $break-cols $break-width ($calc-cols $break-gutter) inside-static;
-
-    @return $break-layout;
-}
-
-
 // sets containers for all breakpoints. It is important to use this to avoid incorrect breakpoint values due to type scaling
 @mixin set-container {
-    $i: 0;
     @include all-breakpoints {
-        $break-layout: calc-layout($current-breakpoint);
-        // apply susy layout
-        @include layout($break-layout);
-
-        // apply max with and
+        // apply max width and show debugging
         @if break-get($current-breakpoint, max) != none {
-            @include breakpoint-layout($current-breakpoint) {
-                @if $debug-columns == true and $debug-allow == true {
-                    @include container(#{$break-layout} show-columns);
-                    background-clip: border-box;
-                } @else {
-                    @include container(#{$break-layout} hide);
-                }
+            max-width: break-get($current-breakpoint, max);
+
+            @if $debug-breakpoints == true and $debug-allow == true {
+                background-color: transparentize($debug-base, 1 - $debug-opacity);
+                background-clip: border-box;
             }
         }
-        $i: $i + 1;
     }
 }
 

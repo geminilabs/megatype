@@ -35,7 +35,7 @@
                 -webkit-font-smoothing: subpixel-antialiased;
 
                 @include all-breakpoints {
-                    content: "breakpoint: #{$current-breakpoint} --- cols: #{break-get($current-breakpoint, cols)} --- start: #{break-get($current-breakpoint, start)} --- max-width: #{break-get($current-breakpoint, max)} --- gutter: #{break-get($current-breakpoint, gutter)}";
+                    content: "breakpoint: #{$current-breakpoint} --- start: #{break-get($current-breakpoint, start)} --- max-width: #{break-get($current-breakpoint, max)}";
                 }
             }
         }
@@ -79,7 +79,7 @@
 
 // debug site root size
 @mixin debug-rootsize($sizes) {
-    @if $debug-allow == true and $debug-baseline == true {
+    @if $debug-allow == true and $debug-type == true {
         &:after {
             content: 'rootsize: ' + nth($sizes, 1) + ' (' + nth($sizes, 1) / 16px * 100% + ')';
             display: inline-block;
@@ -108,44 +108,59 @@
 
 // debug typeset typography
 @mixin debug-type($type-top, $type-bottom, $type-space, $color-space, $color-type) {
-    @if $debug-allow == true and $debug-baseline == true {
-        &:hover {
-            &:before,
-            &:after {
-                content: '';
-                display: block;
-                position: absolute;
-                width: 100%;
-                left: 0;
-                box-sizing: border-box;
-            }
+    @if $debug-allow == true and $debug-type == true {
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            box-sizing: border-box;
+        }
 
-            &:before {
-                top: px-to-rem(-1 * $type-top + 1px);
-                bottom: px-to-rem(-1 * $type-bottom + $type-top);
-                background: transparentize($color-space, 0.7);
-                outline: 1px solid transparentize(darken(mix($color-type, $color-space), 10%), 0);
-            }
+        &:before {
+            top: px-to-rem(-1 * $type-top + 1px);
+            bottom: px-to-rem(-1 * $type-bottom + $type-top);
+            background: transparentize($color-space, 0.7);
+            outline: 1px solid transparentize(darken(mix($color-type, $color-space), 10%), 0);
+        }
 
-            &:after {
-                top: px-to-rem($type-space);
-                bottom: px-to-rem($type-space);
-                background: transparentize($color-type, 0.7);
+        &:after {
+            top: px-to-rem($type-space);
+            bottom: px-to-rem($type-space);
+            background: transparentize($color-type, 0.7);
+        }
+
+        @if $debug-hover == false {
+            &:hover {
+                &:before {
+                    background: transparentize($color-space, 0.5);
+                }
+
+                &:after {
+                    background: transparentize($color-type, 0.5);
+                }
             }
         }
     }
 }
 
-@if $debug-columns == true and $debug-allow == true {
+@if $debug-grid == true and $debug-allow == true {
+    // debug grid - lets grid show through images
     img { opacity: 0.75; }
 }
 
-// fade in
-@keyframes debug-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
+@if $debug-allow == true {
+    @if $debug-breakpoints == true or $debug-type == true {
+        // fade in
+        @keyframes debug-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
     }
 }

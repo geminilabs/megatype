@@ -14,9 +14,3 @@
 @function palette($color) {
     @return map-get($palettes, $color);
 };
-
-// get gutter for current breakpoint
-@function gutter() {
-    $g: break-get($current-breakpoint, gutter);
-    @return $g;
-}

@@ -28,8 +28,5 @@
     "gulp-size": "^2.0.0",
     "postcss-assets": "^4.0.1",
     "run-sequence": "^1.1.5"
-  },
-  "dependencies": {
-    "susy": "^2.2.12"
   }
 }
