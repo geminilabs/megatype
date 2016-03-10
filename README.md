@@ -3,6 +3,8 @@
 # Megatype
 Execute typographic structure with ease    
 
+[![Build Status](https://travis-ci.org/StudioThick/megatype.svg?branch=master)](https://travis-ci.org/StudioThick/megatype)
+
 ##Install
 Can be installed as a bower component:     
 ```bower install megatype --save-dev```    
