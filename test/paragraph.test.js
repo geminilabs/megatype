@@ -1,4 +1,4 @@
-describe('my awesome website', function() {
+describe('test paragraph elements', function() {
 
     before(function() {
         var chai = require('chai');
@@ -8,9 +8,21 @@ describe('my awesome website', function() {
         chai.Should();
     });
 
-    it('should do some chai assertions', function() {
+    it('should compute the right line-height', function(done) {
         return browser
+            .windowHandleSize({width:1024,height:768})
             .url('/index.html')
-            .getTitle().should.eventually.be.equal('megatype');
+            .getCssProperty('.paragraph', 'line-height', function(err, elements) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].value.should.equal('36px');
+                }
+            })
+            .windowHandleSize({width:320,height:480})
+            .getCssProperty('.paragraph', 'line-height', function(err, elements) {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].value.should.equal('24px');
+                }
+            }).call(done);
     });
+
 });
