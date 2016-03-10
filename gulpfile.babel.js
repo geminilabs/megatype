@@ -43,7 +43,7 @@ gulp.task('test:styles', () => {
 
 gulp.task('test:serve', (done) => {
     let app = connect().use(serveStatic('test/fixtures'));
-    httpServer = http.createServer(app).listen(1234, done);
+    httpServer = http.createServer(app).listen(8000, done);
 });
 
 gulp.task('test:e2e', ['test:styles', 'test:serve'], () => {
