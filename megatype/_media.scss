@@ -78,21 +78,15 @@
 
             @if $min != 0 and $max != 0 {
                 @include media($minw, $maxw) {
-                    @include with-layout(calc-layout($min)) {
-                        @content;
-                    }
+                    @content;
                 }
             } @else if $min != 0 {
                 @include media($minw) {
-                    @include with-layout(calc-layout($min)) {
-                        @content;
-                    }
+                    @content;
                 }
             } @else if $max != 0 {
                 @include media(0, $maxw) {
-                    @include with-layout(calc-layout($min)) {
-                        @content;
-                    }
+                    @content;
                 }
             }
         }

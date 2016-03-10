@@ -13,6 +13,7 @@
 
 // colors
 $palettes: (
+    blue:           #169dbf,
     white:          #ffffff,
     black:          #000000
 ) !default;
@@ -26,22 +27,23 @@ $site-color-names: map-keys($palettes) !default;
 // ===================================
 
 // debug grid columns, grid, type baseline, & breakpoints
-$debug-columns: true !default;
 $debug-grid: true !default;
-$debug-baseline: true !default;
+$debug-type: true !default;
 $debug-breakpoints: true !default;
+
+// makes type debugging show on hover instead of all the time
+$debug-hover: true !default;
 
 // debug colors
 $debug-base: #f54848 !default;
-$debug-color: #f54848 !default;
-$debug-type: yellow !default;
+$debug-cap: yellow !default;
 $debug-spacing: turquoise !default;
 
 // size of debug text
 $debug-size: 12px !default;
 
-// grid opacity, for debugging columns
-$grid-opacity: 0.1 !default;
+// grid opacity, for debugging max-width
+$debug-opacity: 0.3 !default;
 
 // limit where baseline will report warnings
 $debug-tolerance: 1px;
@@ -51,16 +53,6 @@ $debug-tolerance: 1px;
 // ===================================
 // Breakpoints & Grid
 // ===================================
-
-// Available susy settings
-// these are direct aliases for the $susy config map, but allow us better override control
-// $susy config map should not be modified directly: instead use these settings
-$susy-math: fluid !default;
-$susy-container-position: center !default;
-$susy-global-box-sizing: border-box !default;
-$susy-gutter-position: inside-static !default;
-$susy-debug-color: transparentize($debug-color,$grid-opacity) !default;
-
 
 // enable responsive baseline & type scaling.
 // increases root font size from each breakpoint, starting from the min size specified in $rootsizes below
@@ -75,44 +67,40 @@ $baseline-snap: true !default;
 // map for flexible retrieval of breakpoint info
 $breakpoint-map: (
     0: (
-        cols:       3,
         start:      0px,
         max:        420px,
-        rootsize:   12px,
-        gutter:     1rem
+        rootsize:   12px
     ),
     1: (
-        cols:       3,
         start:      480px,
         max:        560px,
-        rootsize:   14px,
-        gutter:     1rem
+        rootsize:   14px
     ),
     2: (
-        cols:       6,
         start:      768px,
         max:        840px,
-        rootsize:   16px,
-        gutter:     1.5rem
+        rootsize:   16px
     ),
     3: (
-        cols:       9,
         start:      980px,
         max:        1080px,
-        rootsize:   18px,
-        gutter:     2rem
+        rootsize:   18px
     ),
     4: (
-        cols:       12,
         start:      1280px,
         max:        1440px,
-        rootsize:   20px,
-        gutter:     2rem
+        rootsize:   20px
     )
 ) !default;
 
 // optional: set a minimum size for all typeset typography
 $min-font-size: false !default;
+
+// typographic measure for paragraphs, lists, and headings
+$type-measure: 40rem;
+
+// link offset from baseline
+$link-offset: 2px;
 
 // breakpoint count
 $breakpoint-count: length(map-keys($breakpoint-map)) !default;
@@ -148,7 +136,7 @@ $serif: (
     font-family: 'Georgia, serif',
     regular: normal,
     bold: bold,
-    cap-height: 0.69
+    cap-height: 0.66
 ) !default;
 
 $monospace: (
@@ -157,20 +145,3 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 
-
-// ===================================
-// Read-only
-// ===================================
-// These values override defaults and should not be edited directly in your project
-
-// Available Susy settings - overrides Susy default config
-// To affect this setup access the custom $susy variables instead (under "Breakpoints & Grid")
-$susy: (
-    math: $susy-math,
-    global-box-sizing: $susy-global-box-sizing,
-    gutter-position: $susy-gutter-position,
-    container-position: $susy-container-position,
-    debug: (
-        color: $susy-debug-color
-    )
-);
