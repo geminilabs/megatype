@@ -18,7 +18,7 @@ gulp.task('styles', () => {
 	return gulp.src(paths.styles)
 		.pipe($.sass({
 			outputStyle: 'expanded',
-			precision: 6,
+			precision: 10,
 			includePaths: [
 				'./node_modules',
 				'./bower_components'
