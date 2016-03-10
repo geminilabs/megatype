@@ -50,27 +50,25 @@ exports.config = {
         browserName: 'chrome',
             version: '48.0',
             platform: 'OS X 10.11',
-            name: 'Chrome V48.0 on El Capitan'
+            name: 'Chrome V48.0 on El Capitan',
+            'build': process.env.TRAVIS_BUILD_NUMBER,
+            'tunnel-identifier': (process.env.TRAVIS) ? process.env.TRAVIS_JOB_NUMBER : process.env.TUNNEL_ID
         },
         {
             browserName: 'safari',
             version: '9.0',
             platform: 'OS X 10.11',
-            name: 'safari V9 on El Capitan'
+            name: 'safari V9 on El Capitan',
+            'build': process.env.TRAVIS_BUILD_NUMBER,
+            'tunnel-identifier': (process.env.TRAVIS) ? process.env.TRAVIS_JOB_NUMBER : process.env.TUNNEL_ID
         },
         {
-            browserName: 'internet explorer',
-            version: '11.0',
+            browserName: 'firefox',
+            version: '44.0',
             platform: 'Windows 10',
-            name: 'ie11 on Windows 10'
-        },
-        {
-            browserName: 'iphone',
-            version: '9.2',
-            platform: 'OS X 10.10',
-            deviceName: 'iPhone 6',
-            deviceOrientation: 'portrait',
-            name: 'dafari on iphone 6 ios 9.2'
+            name: 'firefox V44 on Win 10',
+            'build': process.env.TRAVIS_BUILD_NUMBER,
+            'tunnel-identifier': (process.env.TRAVIS) ? process.env.TRAVIS_JOB_NUMBER : process.env.TUNNEL_ID
         }
     ],
     //
