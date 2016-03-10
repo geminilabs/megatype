@@ -1,10 +1,10 @@
-# ℳegatype
+![Megatype](http://studiothick.github.io/megatype/favicons/apple-touch-icon-144x144.png)
+
+# Megatype
 Execute typographic structure with ease    
 
 ##Install
-Can be installed as a node module or bower component:    
-```npm install megatype --save-dev```   
-or    
+Can be installed as a bower component:     
 ```bower install megatype --save-dev```    
 
 Then add a load path to your build process of choice (gulp example shown):    
@@ -32,7 +32,7 @@ And import into your styles with:
 ```    
 
 ##Using MegaType
-MegaType provides typesetting tools, breakpoint mixins, and layout helpers from [Susy 2](http://susy.oddbird.net/).    
+MegaType provides typesetting tools, and some breakpoint mixins.    
 
 
 ###Config
@@ -52,54 +52,41 @@ $baseline-snap: true;
 // map for flexible retrieval of breakpoint info
 $breakpoint-map: (
     0: (
-        cols:       3,
         start:      0px,
         max:        420px,
-        rootsize:   12px,
-        gutter:     1rem
+        rootsize:   12px
     ),
     1: (
-        cols:       3,
         start:      480px,
         max:        560px,
-        rootsize:   14px,
-        gutter:     1rem
+        rootsize:   14px
     ),
     2: (
-        cols:       6,
         start:      768px,
         max:        840px,
-        rootsize:   16px,
-        gutter:     1.5rem
+        rootsize:   16px
     ),
     3: (
-        cols:       9,
         start:      980px,
         max:        1080px,
-        rootsize:   18px,
-        gutter:     2rem
+        rootsize:   18px
     ),
     4: (
-        cols:       12,
         start:      1280px,
         max:        1440px,
-        rootsize:   20px,
-        gutter:     2rem
+        rootsize:   20px
     )
 );
 
 ```
 Breaking down the map:    
-- `cols` is the number of Susy grid columns for this layout. Can be an integer or [Susy column list](http://susydocs.oddbird.net/en/latest/settings/#columns).    
 - `start` is the start position of the breakpoint. Can be `px` or `em`.    
 - `max` is the max width of the container. Can be `px`, `em`, or `%`.   
-- `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.     
-- `gutter` is the size of our grid gutters. Can be `px` or `rem`.   
-    
+- `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.         
 These values can be retreived easily using the `break-get` function, eg:    
 ```scss
 .my-component {
-    width: break-get(3, max-width);
+    width: break-get(3, max);
 }
 ```
 
@@ -177,10 +164,8 @@ p {
     @include min-width(2 3 4) {
         @include typeset($sans, 18px, 28px, $leader: 1, $trailer: 3);
 
-        // Feel free to set other styles for these breakpoints here as well. eg: gutter() mixin is useful for multiple breakpoint media queries
-        padding: 0 gutter();
-        // Susy layout mixins work well here too
-        @include span(4);
+        // Feel free to set other styles for these breakpoints here as well.
+        padding: 2rem;
     }
 }
 
@@ -195,12 +180,10 @@ Both of these mixins can also accept `px` values for a custom media query shortc
 MegaType contains extensive debugging tools to let you visualise your type and grid setup. This is turned on by default.
 
 ```scss
-// debug susy columns
-$debug-columns: true;
 // debug baseline grid
 $debug-grid: true;
 // debug typeset elements, their cap height, and baseline
-$debug-baseline: true;
+$debug-type: true;
 // show some information about the current breakpoint and it's config
 $debug-breakpoints: true;
 ```
@@ -221,9 +204,7 @@ A few extra goodies.
 - See `_toolset_easing.scss` for some handy functions to use in animation easing
 - See `_toolset_units.scss` for some handy unit conversion tools
 
-
 ## Roadmap
-- Bower & Node packages
-- Demo page
+- Node packages
 - Tests
 - Default config templates?
