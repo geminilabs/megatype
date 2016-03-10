@@ -13,20 +13,18 @@ p, dd, dt, figcaption {
 	font-weight: regular-of($serif);
 	text-align: left;
 	color: palette(black);
-	max-width: 30em; // good typographic measure
+	max-width: $type-measure; // good typographic measure
 
-	// declared in px
 	@include min-width(0 1) {
-		@include typeset($serif, 14px, 24px, 0, 1, $debug-element: true);
+		@include typeset($serif, 14px, 28px, 0, 2);
 	}
 	@include min-width(2) {
-		@include typeset($serif, 16px, 32px, 0, 2, $debug-element: true);
+		@include typeset($serif, 16px, 32px, 0, 2);
 	}
 	@include min-width(3 4) {
-		@include typeset($serif, 18px, 36px, 0, 3, $debug-element: true);
+		@include typeset($serif, 18px, 36px, 0, 2);
 	}
 }
-
 
 // Headings. OpenType ligatures, discretionary ligatures and lining figures enabled if available.
 h1, h2, h3, h4, h5, h6 {
@@ -34,6 +32,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: palette(black);
 	font-family: font-family-of($sans);
 	font-weight: bold-of($sans);
+	max-width: $type-measure;
 }
 
 
@@ -43,15 +42,29 @@ h1, .h1-style {
 	font-weight: bold;
 
 	@include min-width(0 1) {
-		@include typeset($sans, 36px, 38px, 1, 2, $debug-element: true);
+		@include typeset($sans, 38px, 38px, 2, 2);
 	}
 
 	@include min-width(2) {
-		@include typeset($sans, 40px, 42px, 1, 2, $debug-element: true);
+		@include typeset($sans, 42px, 42px, 2, 2);
 	}
 
 	@include min-width(3) {
-		@include typeset($sans, 48px, 52px, 1, 3);
+		@include typeset($sans, 52px, 52px, 2, 2);
+	}
+
+	&:first-child {
+		@include min-width(0 1) {
+			@include typeset($sans, 38px, 38px, 1, 2);
+		}
+
+		@include min-width(2) {
+			@include typeset($sans, 42px, 42px, 0, 2);
+		}
+
+		@include min-width(3) {
+			@include typeset($sans, 52px, 52px, 0, 2);
+		}
 	}
 }
 
@@ -59,37 +72,52 @@ h1, .h1-style {
 // Heading level 2.
 h2, .h2-style {
 	@include min-width(0 1 2) {
-		@include typeset($sans, 24px, 28px, 16px, 14px);
+		@include typeset($sans, 26px, 28px, 2, 1);
 	}
 
 	@include min-width(3 4) {
-		@include typeset($sans, 28px, 32px, 16px, 20px);
+		@include typeset($sans, 30px, 32px, 2, 1);
 	}
 }
 
 
 // Heading level 3.
 h3, .h3-style {
-	@include typeset($sans, 18px, 28px, 12px, 14px);
+	@include typeset($sans, 20px, 24px, 2, 1);
+
+	@include min-width(1 2) {
+		@include typeset($sans, 22px, 28px, 2, 1);
+	}
 
 	@include min-width(3) {
-		@include typeset($sans, 22px, 32px, 12px, 20px);
+		@include typeset($sans, 24px, 32px, 2, 1);
 	}
 }
 
+// Heading level 4.
+h4, .h4-style {
+	@include typeset($sans, 18px, 24px, 1, 1);
 
-// Heading level 4, 5, 6.
-h4, .h4-style,
+	@include min-width(1 2) {
+		@include typeset($sans, 20px, 28px, 1, 1);
+	}
+
+	@include min-width(3) {
+		@include typeset($sans, 22px, 32px, 1, 1);
+	}
+}
+
+// Heading level 5, 6.
 h5, .h5-style,
 h6, .h6-style {
 	@include typeset($sans, 1, 2, 1, 1);
 
 	@include min-width(1) {
-		@include typeset($sans, 1rem, 2, 12px, 1);
+		@include typeset($sans, 1rem, 2, 1, 1);
 	}
 
 	@include min-width(3) {
-		@include typeset($sans, 20px, 28px, 16px, 1);
+		@include typeset($sans, 20px, 28px, 1, 1);
 	}
 }
 
@@ -109,7 +137,8 @@ ol {
 }
 
 ol, ul {
-	padding-bottom: 2rem;
+	padding-bottom: 1rem;
+	max-width: $type-measure;
 }
 
 li {
@@ -119,13 +148,21 @@ li {
 	color: palette(black);
 
 	@include min-width(0 1) {
-		@include typeset($serif, 14px, 2, 12px, 18px);
+		@include typeset($serif, 14px, 24px, 0, 1);
 	}
-	@include min-width(2 3 4) {
-		@include typeset($serif, 20px, 38px, 12px, 32px);
+	@include min-width(2) {
+		@include typeset($serif, 16px, 32px, 0, 1);
+	}
+	@include min-width(3 4) {
+		@include typeset($serif, 18px, 36px, 0, 1);
 	}
 }
 
+
+// links
+a {
+	@include text-link;
+}
 
 // Bold.
 b, strong {
@@ -168,7 +205,7 @@ figure {
 // figcaption.
 figcaption {
 	margin-top: 0;
-	background-color: palette(black-pale);
+	background-color: palette(black);
 	font-family: font-family-of($serif);
 	font-style: normal;
 	font-weight: regular-of($serif);
@@ -181,12 +218,12 @@ blockquote {
 	border: 0 none;
 	position: relative;
 	margin-top: 3rem;
-	margin-bottom: 3rem;
-	padding: 0;
+	padding-bottom: 3rem;
+	margin: 0;
 
 	@include min-width(2) {
 		margin-top: 4rem;
-		margin-bottom: 4rem;
+		padding-bottom: 4rem;
 	}
 
 	&:before {
@@ -239,7 +276,7 @@ cite {
 
 // Horizontal rule.
 hr {
-	background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0) 50%,#fff 50%);
+	background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0) 50%,#000 50%);
 	background-repeat: repeat-x;
 	background-size: 2px 2px;
 	background-position: 0 50%;
@@ -267,7 +304,7 @@ code {
 
 	pre & {
 		display: inline-block;
-		padding: 1rem;
+		padding: 1.15rem 1rem 0.85rem;
 	}
 }
 
@@ -302,7 +339,7 @@ textarea {
 	padding: 0 $input-pad;
 	margin: 0;
 	margin-bottom: 2rem;
-	border: 1px solid palette(black-pale);
+	border: 1px solid palette(black);
 	line-height: 2.9rem;
 	min-height: 3rem;
 	-webkit-appearance: none;
@@ -319,7 +356,7 @@ textarea {
 
 	// Placeholder text
 	&::placeholder {
-	   color: palette(black-pale);
+	   color: palette(black);
 	}
 }
 
@@ -392,10 +429,6 @@ th, td {
 th {
 	font-weight: bold;
 	font-family: font-family-of($sans);
-	border-bottom: 2px solid palette(black) !important;
-}
-
-td {
-	background-color: palette(black-light);
+	border-bottom: 2px solid palette(black);
 }
 

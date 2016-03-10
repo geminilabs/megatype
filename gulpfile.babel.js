@@ -31,6 +31,7 @@ gulp.task('test:styles', () => {
 		.pipe($.postcss([
 			require('autoprefixer')({browsers: ['last 3 versions', '> 5%', 'IE >= 9']})
 		]))
+		.pipe($.groupCssMediaQueries())
 		.pipe(gulp.dest(paths.tests + '/fixtures'))
 		.pipe($.size());
 });
@@ -50,18 +51,17 @@ gulp.task('styles', () => {
 	return gulp.src(paths.styles)
 		.pipe($.sass({
 			outputStyle: 'expanded',
-			precision: 6,
+			precision: 10,
 			includePaths: [
-				'./node_modules/susy/sass'
+				'./node_modules',
+				'./bower_components'
 			]
 		})
 		.on('error', $.sass.logError))
 		.pipe($.postcss([
 			require('autoprefixer')({browsers: ['last 3 versions', '> 5%', 'IE >= 9']})
 		]))
-		.pipe($.combineMediaQueries({
-			log: true
-		}))
+		.pipe($.groupCssMediaQueries())
 		.pipe(gulp.dest('dist'))
 		.pipe($.size());
 });

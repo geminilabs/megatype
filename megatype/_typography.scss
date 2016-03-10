@@ -102,7 +102,7 @@
 
 // Set type, measuring from baseline and cap-height
 // output is affected by $baseline-snap config; will snap to nearest baseline if so
-@mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap, $debug-element: false) {
+@mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap) {
     $context: index($breaks, $current-breakpoint);
 
     // Lets write some tests first
@@ -229,7 +229,15 @@
 
     // compute an integer and set the line height
     $lh-integer: no-unit($lineheight / $fontsize);
+
     line-height: $lh-integer;
+
+    // we have to correct for a bug with the way webkit renders unitless line height :(
+    // It computes line height to the correct value but often when rendered to the screen it rounds 1px incorrectly.
+    // See: https://bugs.webkit.org/show_bug.cgi?id=155286
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        line-height: px-to-rem($lineheight);
+    }
 
     // store a unitless value for calulating offsets later
     $lh-calc: no-unit($lineheight);
@@ -300,15 +308,22 @@
     // Now let's set a few handy helpers for nested links
     // set background position for link underlines
     &, a {
-        background-position: 0 round($fontsize * $cap-height + $type-space / 2);
-        background-position: 0 calc(50% + #{$fontsize * $cap-height / 2 - 1px});
+        background-position: 0 round($fontsize + $type-space + $link-offset);
+        background-position: 0 calc(50% + #{$fontsize + $type-space + $link-offset});
     }
 
     a {
         @extend %typeset-child;
     }
 
-    @include debug-type($type-top, $type-bottom, $type-space, $debug-type, $debug-spacing);
+    // apply debugging
+    @if $debug-hover == true {
+        &:hover {
+            @include debug-type($type-top, $type-bottom, $type-space, $debug-cap, $debug-spacing);
+        }
+    } @else {
+        @include debug-type($type-top, $type-bottom, $type-space, $debug-cap, $debug-spacing);
+    }
 }
 
 // resets type, negates type rhythm
@@ -316,7 +331,7 @@
     top: auto;
     margin-bottom: 0;
 
-    @if $debug-allow == true and $debug-baseline == true {
+    @if $debug-allow == true and $debug-type == true {
         &:before,
         &:after {
             display: none;
@@ -327,6 +342,12 @@
 
 // initialise megatype
 @mixin megatype {
+    // For typesetting, we need to reset margins and padding on type elements
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, label, legend, caption, figcaption {
+        margin: 0;
+        padding: 0;
+    }
+
     @include rootsize;
     @include debug-breakpoints;
     @include debug-grid;
