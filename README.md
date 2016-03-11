@@ -128,7 +128,7 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set `cap-height`; It's recommended just to tweak this by trial and error until a typefece sits nicely on the baseline.    
+To set the correct `cap-height` you will need to tweak this in the browser until your typefece sits nicely on the baseline.    
    
 **Tip:** set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.   
 
