@@ -26,3 +26,20 @@ describe('test paragraph elements', function() {
     });
 
 });
+
+describe('margin calculation', function() {
+    
+    it('should space paragraphs at integer multiples of the root size', function(done) {
+        return browser
+            .windowHandleSize({width:1024,height:768})
+            .url('/index.html')
+            .getLocation('#culprit:before').then(function(location) {
+                var lineheight = 18;
+                var y = location.y * 1.0 / lineheight;
+                y.should.equal(Math.floor(y));
+            }).call(done);
+    });
+
+});
+
+

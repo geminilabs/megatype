@@ -27,3 +27,17 @@ body {
         @include typeset($sans, 18px, 2, $leader: 1, $trailer: 3);
     }
 }
+
+.paragraph-margin-test-pixel {
+    @include typeset($sans, 16px, 24px, $leader: 1, $trailer: 36px);
+
+    // we can apply a single breakpoint, starting with breakpoint key: 1
+    @include min-width(1) {
+        @include typeset($sans, 16px, 24px, $leader: 1, $trailer: 40px);
+    }
+
+    // or set several keys at once
+    @include min-width(2 3 4) {
+        @include typeset($sans, 18px, 2, $leader: 1, $trailer: 10px);
+    }
+}
