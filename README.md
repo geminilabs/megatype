@@ -3,11 +3,14 @@
 # Megatype
 Execute typographic structure with ease    
 
+[![Build Status](https://travis-ci.org/StudioThick/megatype.svg?branch=master)](https://travis-ci.org/StudioThick/megatype)
+
 ##Install
-Can be installed as a bower component:     
+
+Download manually or install with Bower (recommended):     
 ```bower install megatype --save-dev```    
 
-Then add a load path to your build process of choice (gulp example shown):    
+You can add a load path to your build process of choice (gulp example shown):    
 ```js
 // gulpfile.babel.js
 
@@ -36,7 +39,7 @@ MegaType provides typesetting tools, and some breakpoint mixins.
 
 
 ###Config
-It's recommended to copy `_config.scss` into your code base and override the `!default` settings where required, leaving unmodified values commented out.    
+Copy `_config.scss` into your code base and override the `!default` settings where required, leaving unmodified values commented out.    
 First, set up your breakpoint map (defaults shown) and your baseline snap & scaling preferences:    
 ```scss
 // config.scss
@@ -83,26 +86,26 @@ Breaking down the map:
 - `start` is the start position of the breakpoint. Can be `px` or `em`.    
 - `max` is the max width of the container. Can be `px`, `em`, or `%`.   
 - `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.         
-These values can be retreived easily using the `break-get` function, eg:    
+These values can be retrieved using the `break-get` function, eg:    
 ```scss
 .my-component {
     width: break-get(3, max);
 }
 ```
 
-To intialise the baseline, call MegaType at the top of your code:   
+To intialise the baseline, call MegaType at the top of your stylesheet:   
 ```scss
 @include megatype;
 ```
 
-You may also wish to apply `max` widths from your config to any content you wish to be contained:     
+For containers, you may also wish to to apply `max` widths from your config:     
 ```scss
 .my-container {
     @include set-container;
 }
 ```
     
-Next we need to have a look at providing some typographic info about each font we want to typeset. Modify the ones provided, or add your own:       
+Next we need to provide some information about each font we want to typeset. Modify the ones provided, or add your own:       
 ```scss
 // Set cap height to set to the baseline.
 // Here are some cap-height sizes to get you started:
@@ -128,19 +131,33 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set `cap-height`; It's recommended just to tweak this by trial and error until a typefece sits nicely on the baseline.    
+To set the correct `cap-height` you will need to tweak this in the browser until your typefece sits nicely on the baseline.    
    
-**Tip:** set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.   
+**Tip:** Setting `$debug-allow` and `$debug-baseline` variables to `true` will display a visual representation of the baseline on your typeset elements.   
 
 
 ###Setting type
 
-With our rootsize initialised and our typographic config all set up, we can start setting type. First, provide the type config, and then provide `$fontsize`, `$lineheight`, `$leader` and `$trailer` in `px`, `rem`, or baseline units. One baseline unit is equivalent to the configured `rootsize` for that media query.
+With our rootsize initialised and our typographic config all set up, we can start setting type. 
+
+First, provide the typeface variable, and then provide `$fontsize`, `$lineheight`, `$leader` and `$trailer` in `px`, `rem`, or baseline units. One baseline unit is equivalent to the `rootsize` for that media query.
 
 ```scss
+// We can set our type using pixels, rems or baseline units
+
+// Heading level 1.
+h1 {
+    @include typeset($font: $sans, $fontsize: 38px, $lineheight: 38px, $leader: 2, $trailer: 2rem);
+}
+
+// Heading level 2.
+h2 {
+    @include typeset($sans, 26px, 28px, 2, 1);
+}
+
+// Paragraph.
 p {
-    // we can set our type using pixels, rems or baseline units
-    @include typeset($font: $sans, $fontsize: 16px, $lineheight: 2rem, $leader: 0, $trailer: 2);
+    @include typeset($sans, 16px, 2rem, 0, 2);
 }
 ```
 The `$fontsize`, `$leader` and `$trailer` are output in `rem`, whereas the lineheight is output as a unitless number. 
@@ -149,7 +166,7 @@ The `$fontsize`, `$leader` and `$trailer` are output in `rem`, whereas the lineh
 
 ###Media queries
 
-To set type at different breakpoints, our `typeset` mixin needs to know about the configured rootsize for that breakpoint. Use the `min-width` mixin with a configured breakpoint key:
+To set type at different breakpoints, our `typeset` mixin needs to know about the configured rootsize for that breakpoint. Use the `min-width` mixin with a breakpoint defined:
 
 ```scss
 p {
@@ -166,18 +183,20 @@ p {
 
         // Feel free to set other styles for these breakpoints here as well.
         padding: 2rem;
+        // we can leverage the break-get mixin  and $current-breakpoint variable for config information on each breakpoint used
+        max-width: break-get($current-breakpoint, max);
     }
 }
 
 ```
 
-There is also a `max-width` mixin available, but this will always use the smallest breakpoint for it's type calculations, so exercise caution if using this in conjunction with the `typeset` mixin.
+There is also a `max-width` mixin, but this will always use the smallest breakpoint for type calculations, so exercise caution when using this in conjunction with the `typeset` mixin.
 
-Both of these mixins can also accept `px` values for a custom media query shortcut, but these will use the settings from breakpoint `0` so should be avoided when setting type with `typeset`
+Both of these mixins can also accept `px` values for a custom media query shortcut, but these will use the settings from breakpoint `0` so should be avoided when setting type with `typeset`.
 
 
 ###Debugging
-MegaType contains extensive debugging tools to let you visualise your type and grid setup. This is turned on by default.
+MegaType contains extensive debugging tools to let you visualise your type and grid setup, which are on by default.
 
 ```scss
 // debug baseline grid
@@ -188,16 +207,17 @@ $debug-type: true;
 $debug-breakpoints: true;
 ```
 
-And these can be toggled on and off all at once in `megatype.scss`:   
+And these can be toggled on and off with one variable in `megatype.scss`:   
 ```
 $debug-allow: true;
 ```
 
-**Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues these can get out of sync with some configs at long distances (on long typeset pages, for example). This is expected behaviour;
+**Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues, they may become out of sync with some configurations at long distances (on long typeset pages, for example). This is expected behaviour.
 
 
 ###Extras
 A few extra goodies.
+
 - See `_typography.scss` for some functions that can easily return information from your typeface configs.
 - An optional color palette config is included, see `_config.scss` and `_map-helpers.scss` for 
 - The `typeset` mixin sets some background position for easily replacing ugly default text decoration with background gradients (can be disabled with `$link-underline-support` in `_config.scss`). See `_text-link.scss` for a self-explanitory helper `text-link` mixin.
