@@ -7,8 +7,27 @@ Execute typographic structure with ease
 
 ##Install
 
-Download manually or install with Bower:     
+Download manually or install with Bower (recommended):     
 ```bower install megatype --save-dev```    
+
+You can add a load path to your build process of choice (gulp example shown):    
+```js
+// gulpfile.babel.js
+
+import gulp-sass from "gulp-sass";
+
+gulp.task('styles', () => {
+    return gulp.src(“app/styles/screen.scss”)
+        .pipe(gulp-sass({
+            outputStyle: 'expanded',
+            precision: 6,
+            includePaths: [
+                './node_modules/megatype'
+            ]
+        })
+        .pipe(gulp.dest('dist'));
+});
+```
 
 And import into your styles with:      
 ```scss
@@ -112,7 +131,7 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set `cap-height`; just tweak the number by trial and error until the typeface sits nicely on the baseline.    
+To set the correct `cap-height` you will need to tweak this in the browser until your typefece sits nicely on the baseline.    
    
 **Tip:** Setting `$debug-allow` and `$debug-baseline` variables to `true` will display a visual representation of the baseline on your typeset elements.   
 
@@ -124,9 +143,21 @@ With our rootsize initialised and our typographic config all set up, we can star
 First, provide the typeface variable, and then provide `$fontsize`, `$lineheight`, `$leader` and `$trailer` in `px`, `rem`, or baseline units. One baseline unit is equivalent to the `rootsize` for that media query.
 
 ```scss
+// We can set our type using pixels, rems or baseline units
+
+// Heading level 1.
+h1 {
+    @include typeset($font: $sans, $fontsize: 38px, $lineheight: 38px, $leader: 2, $trailer: 2rem);
+}
+
+// Heading level 2.
+h2 {
+    @include typeset($sans, 26px, 28px, 2, 1);
+}
+
+// Paragraph.
 p {
-    // we can set our type using pixels, rems or baseline units
-    @include typeset($font: $sans, $fontsize: 16px, $lineheight: 2rem, $leader: 0, $trailer: 2);
+    @include typeset($sans, 16px, 2rem, 0, 2);
 }
 ```
 The `$fontsize`, `$leader` and `$trailer` are output in `rem`, whereas the lineheight is output as a unitless number. 
@@ -152,6 +183,8 @@ p {
 
         // Feel free to set other styles for these breakpoints here as well.
         padding: 2rem;
+        // we can leverage the break-get mixin  and $current-breakpoint variable for config information on each breakpoint used
+        max-width: break-get($current-breakpoint, max);
     }
 }
 
