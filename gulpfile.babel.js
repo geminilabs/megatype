@@ -34,9 +34,6 @@ gulp.task('styles', () => {
 			require('autoprefixer')({browsers: ['last 3 versions', '> 5%', 'IE >= 9']})
 
 		]))
-		.pipe($.combineMediaQueries({
-			log: true
-		}))
 		.pipe(gulp.dest('.tmp/styles'))
 		.pipe($.size())
 		.pipe(browserSync.stream());
