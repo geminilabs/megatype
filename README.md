@@ -195,6 +195,8 @@ $debug-allow: true;
 
 **Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues, they may become out of sync with some configurations at long distances (on long typeset pages, for example). This is expected behaviour.
 
+###Why did we make this?
+Web typography, as we see it, is broken. For a full explanation on why Megatype exists, [read our blog post!](http://www.studiothick.com/essays/web-typography-is-broken)
 
 ###Extras
 A few extra goodies.
