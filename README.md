@@ -128,7 +128,7 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set `cap-height`; It's recommended just to tweak this by trial and error until a typefece sits nicely on the baseline.    
+To set the correct `cap-height` you will need to tweak this in the browser until your typefece sits nicely on the baseline.    
    
 **Tip:** set `$debug-allow` and `$debug-baseline` to `true`, and you will be able to see a visual representation of this on your typeset elements.   
 
@@ -138,9 +138,21 @@ To set `cap-height`; It's recommended just to tweak this by trial and error unti
 With our rootsize initialised and our typographic config all set up, we can start setting type. First, provide the type config, and then provide `$fontsize`, `$lineheight`, `$leader` and `$trailer` in `px`, `rem`, or baseline units. One baseline unit is equivalent to the configured `rootsize` for that media query.
 
 ```scss
+// We can set our type using pixels, rems or baseline units
+
+// Heading level 1.
+h1 {
+	@include typeset($font: $sans, $fontsize: 38px, $lineheight: 38px, $leader: 2, $trailer: 2rem);
+}
+
+// Heading level 2.
+h2 {
+	@include typeset($sans, 26px, 28px, 2, 1);
+}
+
+// Paragraph.
 p {
-    // we can set our type using pixels, rems or baseline units
-    @include typeset($font: $sans, $fontsize: 16px, $lineheight: 2rem, $leader: 0, $trailer: 2);
+    @include typeset($sans, 16px, 2rem, 0, 2);
 }
 ```
 The `$fontsize`, `$leader` and `$trailer` are output in `rem`, whereas the lineheight is output as a unitless number. 
@@ -166,6 +178,8 @@ p {
 
         // Feel free to set other styles for these breakpoints here as well.
         padding: 2rem;
+        // we can leverage the break-get mixin  and $current-breakpoint variable for config information on each breakpoint used
+        max-width: break-get($current-breakpoint, max);
     }
 }
 
