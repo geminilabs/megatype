@@ -15,6 +15,21 @@
     font-family: font-family-of($monospace);
     -webkit-font-smoothing: subpixel-antialiased;
     opacity: 1;
+    @include max-width(1 2) {
+        .button {
+            display: none;
+            text-align: right;
+        }
+    }
+    > .button.button-menu {
+        display: none;
+        &:after {
+            content: "Options";
+        }
+        @include max-width(1 2) {
+         display: block;
+        }
+    }
 }
 
 .no-debug-grid {
@@ -42,5 +57,23 @@
             content: none;
             display: none !important;
         }
+    }
+}
+
+.menu-open {
+    .debugging{
+        > .button {
+                @include max-width(1 2) {
+                   display: block;
+                   text-decoration: underline;
+                   background-image: none;
+               }
+           }
+       >.button-menu {
+             @include max-width(1 2) {
+               background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0) 50%,transparentize(white, 0.5) 50%);
+               background-position: 0 calc(50% + 16px);
+            }
+       }
     }
 }
