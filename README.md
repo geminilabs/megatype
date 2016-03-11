@@ -1,23 +1,24 @@
 ![MegaType](http://studiothick.github.io/megatype/favicons/apple-touch-icon-144x144.png)
 
 # MegaType
-Execute typographic structure with ease    
+Execute typographic structure with ease.
+
+[The MegaType demo page](http://megatype.studiothick.com) shows how typesetting rules scale across breakpoints.
 
 [![Build Status](https://travis-ci.org/StudioThick/megatype.svg?branch=master)](https://travis-ci.org/StudioThick/megatype)
 
 ##Install
 
 Download manually or install with Bower (recommended):     
-```bower install megatype --save-dev```    
+```bower install megatype --save-dev```
 
 And import into your styles with:      
 ```scss
 @import "megatype";
-```    
+```
 
 ##Using MegaType
-MegaType provides typesetting tools, and some breakpoint mixins.    
-
+MegaType provides typesetting tools, and some breakpoint mixins.
 
 ###Config
 Copy `_config.scss` into your codebase and override the `!default` settings where required, leaving unmodified values commented out.    
