@@ -10,25 +10,6 @@ Execute typographic structure with ease
 Download manually or install with Bower (recommended):     
 ```bower install megatype --save-dev```    
 
-You can add a load path to your build process of choice (gulp example shown):    
-```js
-// gulpfile.babel.js
-
-import gulp-sass from "gulp-sass";
-
-gulp.task('styles', () => {
-    return gulp.src(“app/styles/screen.scss”)
-        .pipe(gulp-sass({
-            outputStyle: 'expanded',
-            precision: 6,
-            includePaths: [
-                './node_modules/megatype'
-            ]
-        })
-        .pipe(gulp.dest('dist'));
-});
-```
-
 And import into your styles with:      
 ```scss
 @import "megatype";
@@ -131,7 +112,7 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set the correct `cap-height` you will need to tweak this in the browser until your typefece sits nicely on the baseline.    
+To set the correct `cap-height`, you will need to tweak this value and check in your browser until your typeface sits nicely on the baseline.    
    
 **Tip:** Setting `$debug-allow` and `$debug-baseline` variables to `true` will display a visual representation of the baseline on your typeset elements.   
 
