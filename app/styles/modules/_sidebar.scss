@@ -4,9 +4,7 @@
         margin-bottom: 2rem;
         float: right;
         width: 33.333%;
-    }
-    @include min-width(3) {
-        // width: 25%;
+        padding-left: 2rem;
     }
     @include min-width(4) {
         padding-top: 0;
