@@ -4,12 +4,12 @@
 <!--[if IE 9]>          <html lang="en-AU" class="no-js lte-ie9"> <![endif]-->
 <!--[if gte IE 9]>      <html lang="en-AU" class="no-js"> <![endif]-->
 <!--[if !IE]> -->
-<html lang="en-AU" class="no-js">
+<html lang="en-AU" class="no-js no-debug-type no-debug-breakpoints">
     <!-- <![endif]-->
 
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="">
+        <meta name="description" content="Execute typographic structure with ease.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-touch-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-touch-icon-60x60.png">
@@ -36,12 +36,14 @@
         <link rel="stylesheet" href="styles/screen.css"> </head>
 
     <body>
-        <div class="debugging"> <a href="#" class="button js-toggle-all">Toggle all</a> <a href="#" class="button js-toggle-grid">Toggle grid</a> <a href="#" class="button js-toggle-type">Toggle type</a> <a href="#" class="button js-toggle-breakpoints">Toggle breakpoints</a>            </div>
+        <div class="debugging">
+            <a href="#" class="button button-menu js-toggle-menu" aria-label="menu"></a> <a href="#" class="button js-toggle-all">Toggle all</a> <a href="#" class="button js-toggle-grid">Toggle grid</a> <a href="#" class="button js-toggle-type">Toggle type</a> <a href="#" class="button js-toggle-breakpoints">Toggle breakpoints</a>            </div>
         <script type="text/javascript">
             var toggleAll = document.querySelector('.js-toggle-all');
             var toggleGrid = document.querySelector('.js-toggle-grid');
             var toggleType = document.querySelector('.js-toggle-type');
             var toggleBreakpoints = document.querySelector('.js-toggle-breakpoints');
+            var toggleMenu = document.querySelector('.js-toggle-menu');
             var rootEl = document.querySelector('html');
             var all;
             checkState();
@@ -80,6 +82,11 @@
                 rootEl.classList.toggle('no-debug-breakpoints');
                 checkState();
             });
+            toggleMenu.addEventListener("click", function(e)
+            {
+                e.preventDefault();
+                rootEl.classList.toggle('menu-open');
+            });
             // will set toggle all state to off / on if all are on or off
             function checkState()
             {
@@ -97,6 +104,7 @@
             <h1>MegaType</h1>
             <h4>A responsive typographic baseline for the web. </h4>
             <p>Don't forget to adjust your cap heights on a per-font basis!</p>
+            <p><a href="http://www.studiothick.com/essays/web-typography-is-broken">Read our blog post</a> or <a href="https://github.com/studiothick/megatype">get it on Github</a>.</p>
             <h2>The Horror in Clay</h2>
             <p>The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents. We live on a placid island of ignorance in the midst of black seas of infinity, and it was not meant that we should voyage far.
                 The sciences, each straining in its own direction, have hitherto harmed us little; but some day the piecing together of dissociated knowledge will open up such terrifying vistas of reality, and of our frightful position therein, that we
@@ -131,7 +139,7 @@
                 wildest dreams of myth-maker and theosophist, and disclosed an astonishing degree of cosmic imagination among such half-castes and pariahs as might be least expected to possess it.</p>
             <blockquote>
                 <p>Of such great powers or beings there may be conceivably a survival… a survival of a hugely remote period when… consciousness was manifested, perhaps, in shapes and forms long since withdrawn before the tide of advancing humanity… forms
-                    of which poetry and legend alone have caught a flying memory and called them gods, monsters, mythical beings of all sorts and kinds&hellip;</p> <cite>—Algernon Blackwood</cite> </blockquote> <pre>
+                    of which poetry and legend alone have caught a flying memory and called them gods, monsters, mythical beings of all sorts and kinds&hellips;</p> <cite>—Algernon Blackwood</cite> </blockquote> <pre>
 <code>.the-eye {
     color: midnight;
 }</code>
@@ -143,7 +151,7 @@
                 wildest dreams of <em>myth-maker</em> and <em>theosophist</em>, and disclosed an astonishing degree of cosmic imagination among such half-castes and pariahs as might be least expected to possess it.</p>
             <ol>
                 <li>1925—Dream and Dream Work of H. A. Wilcox, 7 Thomas St., Providence, R. I.</li>
-                <li>Narrative of Inspector John R. Legrasse, 121 Bienville St., New Orleans, La., at 1908 A. A. S. Mtg.—Notes on Same, &amp; Prof. Webb's Acct.</li>
+                <li>Narrative of Inspector John R. Legrasse, 121 Bienville St., New Orleans, La., at 1908 A. A. S. Mtg.—Notes on Same, & Prof. Webb's Acct.</li>
                 <li>Atlantis and the Lost Lemuria, W. Scott-Elliot</li>
             </ol>
             <p>On 1 November 1907, there had come to New Orleans police a frantic summons from the swamp and lagoon country to the south. The squatters there, mostly primitive but good-natured descendants of Lafitte's men, were in the grip of stark terror
