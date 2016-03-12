@@ -212,7 +212,8 @@ A few extra goodies.
 Looking for an example bootstrap integration? We've set up [a basic example here](https://github.com/StudioThick/megatype-bootstrap), based on the [yeoman webapp generator](https://github.com/yeoman/generator-webapp).
 
 ## Roadmap
-- Node packages
+- Megatype Susy 2 example
+- Node package
 - More example tests
 - Default config templates
 - Example themes?
