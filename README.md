@@ -207,6 +207,9 @@ A few extra goodies.
 - The `typeset` mixin sets some background position for easily replacing ugly default text decoration with background gradients (can be disabled with `$link-underline-support` in `_config.scss`). See `_text-link.scss` for a self-explanatory helper `text-link` mixin.
 - See `_toolset_easing.scss` for some handy functions to use in animation easing
 - See `_toolset_units.scss` for some handy unit conversion tools
+ 
+###Bootstrap example
+Looking for an example bootstrap integration? We've set up [a basic example here](https://github.com/StudioThick/megatype-bootstrap), based on the [yeoman webapp generator](https://github.com/yeoman/generator-webapp).
 
 ## Roadmap
 - Node packages
