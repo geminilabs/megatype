@@ -40,9 +40,6 @@
     "wdio-mocha-framework": "^0.2.11",
     "wdio-sauce-service": "^0.2.2"
   },
-  "dependencies": {
-    "susy": "^2.2.12"
-  },
   "babel": {
     "presets": [
       "es2015"
