@@ -1,6 +1,6 @@
 {
   "name": "megatype",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Finesse typographic structure with ease",
   "main": "megatype.scss",
@@ -39,9 +39,6 @@
     "wdio-dot-reporter": "0.0.5",
     "wdio-mocha-framework": "^0.2.11",
     "wdio-sauce-service": "^0.2.2"
-  },
-  "dependencies": {
-    "susy": "^2.2.12"
   },
   "babel": {
     "presets": [
