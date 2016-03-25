@@ -2,6 +2,20 @@
     <head>
         <link rel="stylesheet" media="all" href="test.css">
         <title>megatype</title>
+        <script type="text/javascript">
+            function offset(elt) {
+                var rect = elt.getBoundingClientRect(), bodyElt = document.body;
+                return {
+                    top: rect.top + bodyElt .scrollTop,
+                    left: rect.left + bodyElt .scrollLeft
+                };
+            }
+            function offsetPseudo(id, pseudo) {
+                var elementOffset = offset(document.getElementById(id));
+                var pseudoTop = parseFloat(window.getComputedStyle(document.getElementById('culprit'), ':before').top);
+                return elementOffset + pseudoTop;
+            }
+        </script>
     </head>
     <body>
         <div class="container">

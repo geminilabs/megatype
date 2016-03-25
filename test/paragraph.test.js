@@ -1,12 +1,10 @@
-describe('test paragraph elements', function() {
+var chai = require('chai');
+var chaiAsPromised = require('chai-as-promised');
+chai.use(chaiAsPromised);
+expect = chai.expect;
+chai.Should();
 
-    before(function() {
-        var chai = require('chai');
-        var chaiAsPromised = require('chai-as-promised');
-        chai.use(chaiAsPromised);
-        expect = chai.expect;
-        chai.Should();
-    });
+describe('line-height calculation', function() {
 
     it('should compute the right line-height', function(done) {
         return browser
@@ -28,18 +26,18 @@ describe('test paragraph elements', function() {
 });
 
 describe('margin calculation', function() {
-    
+
     it('should space paragraphs at integer multiples of the root size', function(done) {
         return browser
             .windowHandleSize({width:1024,height:768})
             .url('/index.html')
-            .getLocation('#culprit:before').then(function(location) {
+            .moveToObject('#culprit')
+            .execute('offsetPseudo(\'culprit\', \':before\')')
+            .then(function(result) {
                 var lineheight = 18;
-                var y = location.y * 1.0 / lineheight;
+                var y = result.value * 1.0 / lineheight;
                 y.should.equal(Math.floor(y));
             }).call(done);
     });
 
 });
-
-
