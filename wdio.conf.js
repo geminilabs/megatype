@@ -30,6 +30,8 @@ exports.config = {
     //
     capabilities: [{
         browserName: 'firefox'
+    },{
+        browserName: 'safari'
     }],
     //
     // ===================

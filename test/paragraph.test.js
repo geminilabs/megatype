@@ -31,7 +31,6 @@ describe('margin calculation', function() {
         return browser
             .windowHandleSize({width:1024,height:768})
             .url('/index.html')
-            .moveToObject('#culprit')
             .execute('offsetPseudo(\'culprit\', \':before\')')
             .then(function(result) {
                 var lineheight = 18;
