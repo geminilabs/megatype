@@ -1,7 +1,9 @@
-![Megatype](http://studiothick.github.io/megatype/favicons/apple-touch-icon-144x144.png)
+![MegaType](http://studiothick.github.io/megatype/favicons/apple-touch-icon-144x144.png)
 
-# Megatype
-Execute typographic structure with ease
+# MegaType
+Execute typographic structure with ease.
+
+[The MegaType demo page](http://megatype.studiothick.com) shows how typesetting rules scale across breakpoints.
 
 [![Build Status](https://travis-ci.org/StudioThick/megatype.svg?branch=master)](https://travis-ci.org/StudioThick/megatype)
 
@@ -11,7 +13,7 @@ Download manually or install with Bower (recommended):
 
     bower install megatype --save-dev
 
-or Npm
+or with Npm
 
     npm install megatype --save-dev
 
@@ -44,10 +46,10 @@ And import into your styles with:
 ##Using MegaType
 MegaType provides typesetting tools, and some breakpoint mixins.
 
-
 ###Config
-Copy `_config.scss` into your code base and override the `!default` settings where required, leaving unmodified values commented out.
+Copy `_config.scss` into your codebase and override the `!default` settings where required, leaving unmodified values commented out.
 First, set up your breakpoint map (defaults shown) and your baseline snap & scaling preferences:
+
 ```scss
 // config.scss
 
@@ -113,6 +115,7 @@ For containers, you may also wish to to apply `max` widths from your config:
 ```
 
 Next we need to provide some information about each font we want to typeset. Modify the ones provided, or add your own:
+
 ```scss
 // Set cap height to set to the baseline.
 // Here are some cap-height sizes to get you started:
@@ -138,10 +141,9 @@ $monospace: (
     cap-height: 0.68
 ) !default;
 ```
-To set the correct `cap-height` you will need to tweak this in the browser until your typefece sits nicely on the baseline.
+To set the correct `cap-height`, you will need to tweak this value and check in your browser until your typeface sits nicely on the baseline.    
 
 **Tip:** Setting `$debug-allow` and `$debug-baseline` variables to `true` will display a visual representation of the baseline on your typeset elements.
-
 
 ###Setting type
 
@@ -167,7 +169,9 @@ p {
     @include typeset($sans, 16px, 2rem, 0, 2);
 }
 ```
-The `$fontsize`, `$leader` and `$trailer` are output in `rem`, whereas the lineheight is output as a unitless number.
+
+The `$fontsize`, `$leader` and `$trailer` are output in `rem` units, whereas the lineheight is output as a unitless number.
+
 `$leader` is calculated alongside an offset to put our type on the baseline, and output as a `top` value. This is then added to the `$trailer`, which is output as `margin-bottom`.
 
 
@@ -203,7 +207,7 @@ Both of these mixins can also accept `px` values for a custom media query shortc
 
 
 ###Debugging
-MegaType contains extensive debugging tools to let you visualise your type and grid setup, which are on by default.
+MegaType contains extensive debugging tools to let you visualise your type and grid setup, these are enabled by default.
 
 ```scss
 // debug baseline grid
@@ -214,24 +218,31 @@ $debug-type: true;
 $debug-breakpoints: true;
 ```
 
-And these can be toggled on and off with one variable in `megatype.scss`:
+Debugging can be toggled on and off globally with one variable in `megatype.scss`:
+
 ```
 $debug-allow: true;
 ```
 
-**Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues, they may become out of sync with some configurations at long distances (on long typeset pages, for example). This is expected behaviour.
+**Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues, they may get out of sync on some configurations with extreme dimensions (on lengthy typeset pages, for example). This is an unfortunate, but expected behaviour.
 
+###Why did we make this?
+Web typography, as we see it, is broken. For a full explanation on why MegaType exists, [read our blog post!](http://www.studiothick.com/essays/web-typography-is-broken)
 
 ###Extras
 A few extra goodies.
 
 - See `_typography.scss` for some functions that can easily return information from your typeface configs.
 - An optional color palette config is included, see `_config.scss` and `_map-helpers.scss` for
-- The `typeset` mixin sets some background position for easily replacing ugly default text decoration with background gradients (can be disabled with `$link-underline-support` in `_config.scss`). See `_text-link.scss` for a self-explanitory helper `text-link` mixin.
+- The `typeset` mixin sets some background position for easily replacing ugly default text decoration with background gradients (can be disabled with `$link-underline-support` in `_config.scss`). See `_text-link.scss` for a self-explanatory helper `text-link` mixin.
 - See `_toolset_easing.scss` for some handy functions to use in animation easing
 - See `_toolset_units.scss` for some handy unit conversion tools
 
+###Bootstrap example
+Looking for an example bootstrap integration? We've set up [a basic example here](https://github.com/StudioThick/megatype-bootstrap), based on the [yeoman webapp generator](https://github.com/yeoman/generator-webapp).
+
 ## Roadmap
-- Node packages
-- Tests
-- Default config templates?
+- Megatype Susy 2 example
+- More example tests
+- Default config templates
+- Example themes?
