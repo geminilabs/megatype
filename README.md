@@ -9,10 +9,36 @@ Execute typographic structure with ease.
 
 ##Install
 
-Download manually or install with Bower (recommended):     
-```bower install megatype --save-dev```
+Download manually or install with Bower (recommended):
 
-And import into your styles with:      
+    bower install megatype --save-dev
+
+or with Npm
+
+    npm install megatype --save-dev
+
+You can add a load path to your build process of choice (gulp example shown):
+
+```js
+// gulpfile.babel.js
+
+import gulp-sass from "gulp-sass";
+
+gulp.task('styles', () => {
+    return gulp.src(“app/styles/screen.scss”)
+        .pipe(gulp-sass({
+            outputStyle: 'expanded',
+            precision: 6,
+            includePaths: [
+                './node_modules/megatype'
+            ]
+        })
+        .pipe(gulp.dest('dist'));
+});
+```
+
+And import into your styles with:
+
 ```scss
 @import "megatype";
 ```
@@ -21,8 +47,9 @@ And import into your styles with:
 MegaType provides typesetting tools, and some breakpoint mixins.
 
 ###Config
-Copy `_config.scss` into your codebase and override the `!default` settings where required, leaving unmodified values commented out.    
-First, set up your breakpoint map (defaults shown) and your baseline snap & scaling preferences:    
+Copy `_config.scss` into your codebase and override the `!default` settings where required, leaving unmodified values commented out.
+First, set up your breakpoint map (defaults shown) and your baseline snap & scaling preferences:
+
 ```scss
 // config.scss
 
@@ -64,30 +91,31 @@ $breakpoint-map: (
 );
 
 ```
-Breaking down the map:    
-- `start` is the start position of the breakpoint. Can be `px` or `em`.    
-- `max` is the max width of the container. Can be `px`, `em`, or `%`.   
-- `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.         
-These values can be retrieved using the `break-get` function, eg:    
+Breaking down the map:
+- `start` is the start position of the breakpoint. Can be `px` or `em`.
+- `max` is the max width of the container. Can be `px`, `em`, or `%`.
+- `rootsize` is the base font size applied to the `html` element. Can be `px` or `rem`. This also controls our grid size at this breakpoint.
+These values can be retrieved using the `break-get` function, eg:
 ```scss
 .my-component {
     width: break-get(3, max);
 }
 ```
 
-To intialise the baseline, call MegaType at the top of your stylesheet:   
+To intialise the baseline, call MegaType at the top of your stylesheet:
 ```scss
 @include megatype;
 ```
 
-For containers, you may also wish to to apply `max` widths from your config:     
+For containers, you may also wish to to apply `max` widths from your config:
 ```scss
 .my-container {
     @include set-container;
 }
 ```
 
-Next we need to provide some information about each font we want to typeset. Modify the ones provided, or add your own:       
+Next we need to provide some information about each font we want to typeset. Modify the ones provided, or add your own:
+
 ```scss
 // Set cap height to set to the baseline.
 // Here are some cap-height sizes to get you started:
@@ -115,8 +143,7 @@ $monospace: (
 ```
 To set the correct `cap-height`, you will need to tweak this value and check in your browser until your typeface sits nicely on the baseline.    
 
-**Tip:** Setting `$debug-allow` and `$debug-baseline` variables to `true` will display a visual representation of the baseline on your typeset elements.   
-
+**Tip:** Setting `$debug-allow` and `$debug-baseline` variables to `true` will display a visual representation of the baseline on your typeset elements.
 
 ###Setting type
 
@@ -142,7 +169,9 @@ p {
     @include typeset($sans, 16px, 2rem, 0, 2);
 }
 ```
+
 The `$fontsize`, `$leader` and `$trailer` are output in `rem` units, whereas the lineheight is output as a unitless number.
+
 `$leader` is calculated alongside an offset to put our type on the baseline, and output as a `top` value. This is then added to the `$trailer`, which is output as `margin-bottom`.
 
 
@@ -189,7 +218,8 @@ $debug-type: true;
 $debug-breakpoints: true;
 ```
 
-Debugging can be toggled on and off globally with one variable in `megatype.scss`:   
+Debugging can be toggled on and off globally with one variable in `megatype.scss`:
+
 ```
 $debug-allow: true;
 ```
@@ -207,7 +237,7 @@ A few extra goodies.
 - The `typeset` mixin sets some background position for easily replacing ugly default text decoration with background gradients (can be disabled with `$link-underline-support` in `_config.scss`). See `_text-link.scss` for a self-explanatory helper `text-link` mixin.
 - See `_toolset_easing.scss` for some handy functions to use in animation easing
 - See `_toolset_units.scss` for some handy unit conversion tools
- 
+
 ###Bootstrap example
 Looking for an example bootstrap integration? We've set up [a basic example here](https://github.com/StudioThick/megatype-bootstrap), based on the [yeoman webapp generator](https://github.com/yeoman/generator-webapp).
 
