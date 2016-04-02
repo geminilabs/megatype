@@ -54,9 +54,13 @@
     "url": "git+https://github.com/StudioThick/megatype.git"
   },
   "keywords": [
+    "sass",
+    "susy",
+    "megatype",
     "typography",
-    "css",
-    "sass"
+    "baseline",
+    "vertical-rhythm",
+    "grid"
   ],
   "bugs": {
     "url": "https://github.com/StudioThick/megatype/issues"

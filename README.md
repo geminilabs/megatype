@@ -243,7 +243,6 @@ Looking for an example bootstrap integration? We've set up [a basic example here
 
 ## Roadmap
 - Megatype Susy 2 example
-- Node package
 - More example tests
 - Default config templates
 - Example themes?
