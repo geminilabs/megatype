@@ -1,0 +1,9 @@
+.toggle {
+    background: none;
+    text-decoration: none;
+    margin: 0 0.125em;
+    text-transform: uppercase;
+    font-weight: bold-of($sans);
+    @include text-link(palette(white));
+    background-position: 0 calc(50% + 6px);
+}
