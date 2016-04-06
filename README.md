@@ -226,6 +226,32 @@ $debug-allow: true;
 
 **Note:** Background gradients are used for some debugging elements. As background gradients suffer from pixel rounding issues, they may get out of sync on some configurations with extreme dimensions (on lengthy typeset pages, for example). This is an unfortunate, but expected behaviour.
 
+### Fancy underlines
+MegaType also includes a mixin to make your link underlines look great. The global variables in `_config.scss` control their default settings:
+
+```scss
+// Link offset from baseline. Can be a positive or negative value
+$link-offset: 2px !default;
+
+// Opacity of the underline.
+$link-underline-opacity: 0.6 !default;
+
+// Opacity of the underline when hovered.
+$link-underline-hover-opacity: 0.8 !default;
+```
+
+Your underlines can be initialised where necessary using the `text-link()` mixin. By default, it will use the variables above - however, you can override them in-context if necessary.
+
+```scss
+    a {
+        @include text-link($color: palette(blue), $hover: $color, $offset: $link-offset, $opacity: $link-underline-opacity, $hover-opacity: $link-underline-hover-opacity);
+    }
+```
+
+This mixin is intended to be used with inline links, and may behave unpredictably with `inline-block` elements. To rectify, you can choose to adjust the `link-offset` or override the `background-position` value.
+
+Alternatively, you can remove fancy underlines by including the `reset-link()` mixin on the element.
+
 ###Why did we make this?
 Web typography, as we see it, is broken. For a full explanation on why MegaType exists, [read our blog post!](http://www.studiothick.com/essays/web-typography-is-broken)
 

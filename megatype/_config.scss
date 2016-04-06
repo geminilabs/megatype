@@ -99,10 +99,16 @@ $min-font-size: false !default;
 // typographic measure for paragraphs, lists, and headings
 $type-measure: 40rem !default;
 
+
 // link offset from baseline
 $link-offset: 2px !default;
-$link-opacity: 0.6 !default;
-$link-hover-opacity: 0.8 !default;
+
+// link underline opacity
+$link-underline-opacity: 0.6 !default;
+
+// link underline hover opacity
+$link-underline-hover-opacity: 0.8 !default;
+
 
 // breakpoint count
 $breakpoint-count: length(map-keys($breakpoint-map)) !default;
