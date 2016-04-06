@@ -305,16 +305,6 @@
     }
 
 
-    // Now let's set a few handy helpers for nested links
-    // set background position for link underlines
-    &, a {
-        background-position: 0 round($fontsize + $type-space + $link-offset);
-        background-position: 0 calc(50% + #{$fontsize + $type-space + $link-offset});
-    }
-
-    a {
-        @extend %typeset-child;
-    }
 
     // apply debugging
     @if $debug-hover == true {
