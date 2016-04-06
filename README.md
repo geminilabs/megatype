@@ -248,7 +248,7 @@ Your underlines can be initialised where necessary using the `text-link()` mixin
     }
 ```
 
-This mixin is intended to be used with inline links, and may behave unpredictably with `inline-block` elements. To rectify, you can choose to adjust the `link-offset` or override the `background-position` value.
+This mixin is intended to be used with inline links, but will also work with `inline-block` *if* top and bottom padding is equal. Otherwise, you can manually adjust the `link-offset` value to correct for uneven padding.
 
 Alternatively, you can remove fancy underlines by including the `reset-link()` mixin on the element.
 
