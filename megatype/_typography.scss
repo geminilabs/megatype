@@ -92,14 +92,6 @@
 }
 
 
-// helper for children that are typeset (see typeset mixin below)
-%typeset-child {
-    line-height: inherit;
-    font-size: inherit;
-    font-family: inherit;
-}
-
-
 // Set type, measuring from baseline and cap-height
 // output is affected by $baseline-snap config; will snap to nearest baseline if so
 @mixin typeset($font, $fontsize, $lineheight, $leader: 0px, $trailer: 0px, $snap: $baseline-snap) {
@@ -310,10 +302,6 @@
     &, a {
         background-position: 0 round($fontsize + $type-space + $link-offset);
         background-position: 0 calc(50% + #{$fontsize + $type-space + $link-offset});
-    }
-
-    a {
-        @extend %typeset-child;
     }
 
     // apply debugging
