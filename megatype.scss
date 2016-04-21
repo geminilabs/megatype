@@ -19,7 +19,6 @@ $debug-allow: false !default;
 
 // custom toolsets
 @import "megatype/toolsets/toolset__units";
-@import "megatype/toolsets/toolset__math";
 @import "megatype/toolsets/toolset__easing";
 
 // import mixins
