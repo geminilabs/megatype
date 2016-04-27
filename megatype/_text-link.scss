@@ -7,7 +7,7 @@
 
 
 // better text decoration
-@mixin text-link($color: palette(blue), $hover: $color, $offset: $link-offset, $opacity: $link-underline-opacity, $hover-opacity: $link-underline-hover-opacity) {
+@mixin text-link($color: $link-color, $hover: $color, $offset: $link-offset, $opacity: $link-underline-opacity, $hover-opacity: $link-underline-hover-opacity) {
 
     color: $color;
     text-decoration: none;

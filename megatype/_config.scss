@@ -99,6 +99,8 @@ $min-font-size: false !default;
 // typographic measure for paragraphs, lists, and headings
 $type-measure: 40rem !default;
 
+// link offset from baseline
+$link-color: palette(blue) !default;
 
 // link offset from baseline
 $link-offset: 2px !default;
