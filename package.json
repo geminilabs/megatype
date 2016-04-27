@@ -1,6 +1,6 @@
 {
   "name": "megatype",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "private": false,
   "description": "Finesse typographic structure with ease",
   "main": "megatype.scss",
