@@ -18,46 +18,61 @@
     $max-val: '';
     $max-unit: '';
 
-    @if $max != 0 {
-        $max-val: type-of($max);
-        $max-unit: unit($max);
-    }
+    // Make sure breakpoints aren't the same, or provided as the first breakpoint key (0)
+    @if $min != $max or $min == 0 {
+        @if $max != 0 {
+            $max-val: type-of($max);
+            $max-unit: unit($max);
+        }
 
-    @if $min-unit == "px" {
-        $min: no-unit($min) / 16 * 1em;
-    }
+        @if $min-unit == "px" {
+            $min: no-unit($min) / 16 * 1em;
+        }
 
-    @if $max-unit == "px" {
-        $max: no-unit($max) / 16 * 1em;
-    }
+        @if $max-unit == "px" {
+            $max: no-unit($max) / 16 * 1em;
+        }
 
-    $query: "all" !default;
+        $query: "all" !default;
 
-    // If it is a number then we can proceed
-    @if $min-val == number or $max-val == number {
-        @if $min-unit == "px" or $min-unit == "em" {
-            // If using other numbers output value in ems either for min, min & max or max width breakpoints.
-            @if $max-unit == "px" or $max-unit == "em" {
-                $query: "(min-width: #{$min}) and (max-width: #{$max})";
+        // If it is a number then we can proceed
+        @if $min-val == number or $max-val == number {
+            // first, lets kick any breakpoint variables back to the breakpoint-layout mixin, which can handle these
+            @if unitless($min) and unitless($max) {
+                @include breakpoint-layout($min, $max) {
+                    @content;
+                };
             } @else {
-                $query: "(min-width: #{$min})";
+                @if $min-unit == "px" or $min-unit == "em" {
+                    // If using other numbers output value in ems either for min, min & max or max width breakpoints.
+                    @if $max-unit == "px" or $max-unit == "em" {
+                        $query: "(min-width: #{$min}) and (max-width: #{$max})";
+                    } @else {
+                        $query: "(min-width: #{$min})";
+                    }
+                } @else if $max-unit == "px" or $max-unit == "em" {
+                    $query: "(max-width: #{$max})";
+                } @else {
+                    @error "#{$min} and #{$max} are not valid for use in media query mixin - must use px or ems";
+                }
+
+                @if $query != "all" {
+                    @media #{$query} { @content; }
+                } @else {
+                    @error "#{$min} and #{$max} did not resolve to a valid media query, styles not output";
+                }
             }
-        } @else if $max-unit == "px" or $max-unit == "em" {
-            $query: "(max-width: #{$max})";
         } @else {
-            @error "#{$min} and #{$max} are not valid for use in media query mixin - must use px or ems";
+            @error "#{$min} and #{$max} values do not form a valid media query";
         }
     } @else {
-        @error "#{$min} and #{$max} values do not form a valid media query";
-    }
-
-    @if $query != "all" {
-        @media #{$query} { @content; }
+        @warn "Provided #{$min} and #{$max} breakpoints are the same and will not produce any styles, so this query has not been output";
     }
 }
 
 
-// wrapper for combining breakpoint mixin and susy 'with layout' mixin. Also exposes current breakpoint to content via $current-breakpoint/root variables
+// Wrapper for media queries using breakpoint keys. Also exposes current breakpoint to content via $current-breakpoint/root variables
+// WARNING: recommended for internal use only — this mixin will be removed / combined with "media" mixin in an upcoming version
 @mixin breakpoint-layout($min: 0, $max: 0) {
     @if map-has-key($breakpoint-map, $min) {
         // make current breakpoint context available in global scope
@@ -68,11 +83,11 @@
             @content;
         } @else {
             $minw: break-get($min, start);
+            $maxw: none;
 
-            @if map-has-key($breakpoint-map, $min) {
-                $maxw: break-get($max, start);
-            } @else if $min != 0 {
-                // warn if we're doing a max media query, but it's not in the map
+            @if map-has-key($breakpoint-map, $max) {
+                $maxw: break-get($max, start) - 1px;
+            } @else {
                 @warn "#{$max} is not a valid breakpoint number";
             }
 
@@ -104,30 +119,18 @@
 // apply min-width media query to one or more breakpoints
 @mixin min-width($apply-breaks: 0) {
     @each $break in $apply-breaks {
-        @if unitless($break) == true {
-            @include breakpoint-layout($break) {
-                @content;
-            }
-        } @else {
-            @include media($break) {
-                @content;
-            };
-        }
+        @include media($break) {
+            @content;
+        };
     }
 }
 
 // apply max-width media query to one or more breakpoints
 @mixin max-width($apply-breaks: 1) {
     @each $break in $apply-breaks {
-        @if unitless($break) == true {
-            @include breakpoint-layout(0, $break) {
-                @content;
-            }
-        } @else {
-            @include media(0, $break) {
-                @content;
-            };
-        }
+        @include media(0, $break) {
+            @content;
+        };
     }
 }
 
