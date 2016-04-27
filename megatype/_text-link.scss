@@ -18,16 +18,10 @@
     background-position: 0 calc(43% + 0.44em + #{$offset});
     cursor: pointer;
 
-
     @if $hover != false {
         &:hover {
-            @if $hover == $color and $hover != #fff and $hover != white {
-                background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0) 50%, rgba(darken($hover, 20%), $hover-opacity) 50%);
-                color: darken($hover, 20%);
-            } @else {
-                background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0) 50%, rgba($hover, $hover-opacity) 50%);
-                color: $hover;
-            }
+            background-image: linear-gradient(to bottom,rgba(0, 0, 0, 0) 50%, rgba($hover, $hover-opacity) 50%);
+            color: $hover;
         }
     }
 
