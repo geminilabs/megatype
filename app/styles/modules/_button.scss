@@ -8,7 +8,6 @@
             $border: px-to-rem($border);
         }
     }
-    @debug $border;
 
     $total: 0;
 
@@ -22,8 +21,6 @@
     }
 
     $remainder: $current-rootsize - (rem-to-px($total) % $current-rootsize);
-    @debug $current-rootsize;
-    @debug $remainder;
 
     @if $remainder != 0 or $remainder != 0px {
         position: relative;
