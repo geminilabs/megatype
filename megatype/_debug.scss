@@ -22,7 +22,7 @@
                 background-color: transparentize($debug-base, 0.15);
                 color: #fff;
                 font-size: $debug-size;
-                z-index: 10000;
+                z-index: 99999;
                 padding: 0.75em 2em;
                 text-shadow: 0 -1px 0 darken($debug-base, 25%);
                 animation: debug-in 0.75s $easeOutCubic;
@@ -50,6 +50,7 @@
         body {
             position: relative;
             height: auto !important; // makes sure grid will span down screen as scrolling
+            z-index: 0;
 
             &:before {
                 @include all-breakpoints {
@@ -74,7 +75,7 @@
                     left:0;
                     right:0;
                     bottom:0;
-                    z-index: 99999;
+                    z-index: 99998;
                     content: '';
                     pointer-events: none;
                 }
@@ -128,6 +129,7 @@
             width: 100%;
             left: 0;
             box-sizing: border-box;
+            pointer-events: none;
         }
 
         &:before {
