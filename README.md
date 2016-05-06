@@ -149,23 +149,28 @@ To set the correct `cap-height`, you will need to tweak this value and check in 
 
 With our rootsize initialised and our typographic config all set up, we can start setting type.
 
-First, provide the typeface variable, and then provide `$fontsize`, `$lineheight`, `$leader` and `$trailer` in `px`, `rem`, or baseline units. One baseline unit is equivalent to the `rootsize` for that media query.
+First, provide the typeface variable, and then provide `$fontsize`, `$lineheight`, `$leader` and `$trailer` in `px`, `rem`, or baseline units. One baseline unit is equivalent to the `rootsize` for that media query. Please note that the `typeset()` mixin does not set the  `font-family` property, to do this please use `font-family-of()`.
 
 ```scss
 // We can set our type using pixels, rems or baseline units
 
 // Heading level 1.
 h1 {
+    // Set font-family
+    font-family-of($sans); 
+    // Set type settings
     @include typeset($font: $sans, $fontsize: 38px, $lineheight: 38px, $leader: 2, $trailer: 2rem);
 }
 
 // Heading level 2.
 h2 {
+    font-family-of($sans); 
     @include typeset($sans, 26px, 28px, 2, 1);
 }
 
 // Paragraph.
 p {
+    font-family-of($sans); 
     @include typeset($sans, 16px, 2rem, 0, 2);
 }
 ```
@@ -181,6 +186,7 @@ To set type at different breakpoints, our `typeset` mixin needs to know about th
 
 ```scss
 p {
+    font-family-of($sans);
     @include typeset($sans, 16px, 24px, $leader: 0, $trailer: 2);
 
     // we can apply a single breakpoint, starting with breakpoint key: 1
