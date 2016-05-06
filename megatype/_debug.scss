@@ -10,7 +10,7 @@
 @mixin debug-breakpoints{
     @if $debug-breakpoints == true and $debug-allow == true {
 
-        body {
+        html {
             &:before {
                 display: block;
                 box-sizing: border-box;
@@ -46,29 +46,39 @@
 // debug grid
 @mixin debug-grid {
     @if $debug-grid == true and $debug-allow == true {
-        html {
-            @include all-breakpoints {
-                background:
-                    // vertical grid starts at 0
-                    linear-gradient(to bottom,
-                        transparentize(darken($debug-base, 5%), 0.4) 1px,
-                        transparent 1px, transparent $current-rootsize),
-                    // for horizontal grid, starts at center, is more complex to draw
-                    linear-gradient(to right,
-                        transparent 0px,
-                        transparent $current-rootsize / 2 - 1px,
-                        transparentize(darken($debug-base, 5%), 0.9) $current-rootsize / 2 - 1px,
-                        transparentize(darken($debug-base, 5%), 0.9) $current-rootsize / 2,
-                        transparent $current-rootsize / 2,
-                        transparent $current-rootsize);
-                background-repeat: repeat;
-                background-position: center top;
-                background-size: $current-rootsize $current-rootsize;
-            }
-        }
 
         body {
-            background-color: transparent;
+            position: relative;
+            height: auto !important; // makes sure grid will span down screen as scrolling
+
+            &:before {
+                @include all-breakpoints {
+                    background:
+                        // vertical grid starts at 0
+                        linear-gradient(to bottom,
+                            transparentize(darken($debug-base, 5%), 0.4) 1px,
+                            transparent 1px, transparent $current-rootsize),
+                        // for horizontal grid, starts at center, is more complex to draw
+                        linear-gradient(to right,
+                            transparent 0px,
+                            transparent $current-rootsize / 2 - 1px,
+                            transparentize(darken($debug-base, 5%), 0.9) $current-rootsize / 2 - 1px,
+                            transparentize(darken($debug-base, 5%), 0.9) $current-rootsize / 2,
+                            transparent $current-rootsize / 2,
+                            transparent $current-rootsize);
+                    background-repeat: repeat;
+                    background-position: center top;
+                    background-size: $current-rootsize $current-rootsize;
+                    position: absolute;
+                    top:0;
+                    left:0;
+                    right:0;
+                    bottom:0;
+                    z-index: 99999;
+                    content: '';
+                    pointer-events: none;
+                }
+            }
 
             > * {
                 opacity: 0.75;
@@ -98,6 +108,7 @@
             font-size: $debug-size;
             font-family: font-family-of($monospace);
             -webkit-font-smoothing: subpixel-antialiased;
+            z-index: 1000;
 
             @include all-breakpoints {
                 content: 'rootsize: ' + break-get($current-breakpoint, rootsize) + ' (' + break-get($current-breakpoint, rootsize) / 16px * 100% + ')';

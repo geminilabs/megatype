@@ -13,6 +13,9 @@
 // toggle debug
 $debug-allow: false !default;
 
+// helper functions
+// must be before config so that variables can use them
+@import "megatype/map-helpers";
 
 // import site base
 @import "megatype/config";
@@ -22,7 +25,6 @@ $debug-allow: false !default;
 @import "megatype/toolsets/toolset__easing";
 
 // import mixins
-@import "megatype/map-helpers";
 @import "megatype/media";
 @import "megatype/container";
 @import "megatype/typography";

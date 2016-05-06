@@ -86,7 +86,7 @@
         }
     }
 
-    body {
+    html {
         @include debug-rootsize($sizes);
     }
 }
