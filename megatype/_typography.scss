@@ -163,12 +163,14 @@
         @if unitless($min-font-size) {
             $min-font-size: $min-font-size * 1rem;
         }
+        //  Converting min font size to pixels
+        @if unit($min-font-size) == "rem" {
+            $min-font-size: rem-to-px($min-font-size);
+        }
     }
 
 
 
-    // With universal rem values, it's now easy to convert to px
-    // We will work in px for most of the rest of this mixin, and convert back to rem at the end
     @if unit($fontsize) == "rem" {
         $fontsize: rem-to-px($fontsize);
     }
@@ -181,12 +183,9 @@
     @if unit($trailer) == "rem" {
         $trailer: rem-to-px($trailer);
     }
-    @if $min-font-size != false {
-        @if unit($min-font-size) == "rem" {
-            $min-font-size: rem-to-px($min-font-size);
-        }
-    }
 
+    // With universal rem values, it's now easy to convert to px
+    // We will work in px for most of the rest of this mixin, and convert back to rem at the end
     // if min-font-size has been provided, let's first do a quick cheack against that, and modify our fontsize if required
     // this can be helpful for accessibility reasons
     @if $min-font-size != false {
