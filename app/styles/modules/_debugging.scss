@@ -33,7 +33,10 @@
 }
 
 .no-debug-grid {
-    background: none;
+    body:before {
+        content: none;
+        display: none;
+    }
 }
 
 .no-debug-breakpoints {
@@ -41,12 +44,10 @@
         background-color: transparent;
     }
 
-    body {
-        &:before,
-        &:after {
-            content: none;
-            display: none;
-        }
+    &:before,
+    &:after {
+        content: none;
+        display: none;
     }
 }
 
