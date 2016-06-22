@@ -223,6 +223,13 @@
 
     line-height: $lh-integer;
 
+    // we have to correct for a bug with the way webkit renders unitless line height :(
+    // It computes line height to the correct value but often when rendered to the screen it rounds 1px incorrectly.
+    // See: https://bugs.webkit.org/show_bug.cgi?id=155286
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        line-height: px-to-rem($lineheight);
+    }
+
     // store a unitless value for calulating offsets later
     $lh-calc: no-unit($lineheight);
 
