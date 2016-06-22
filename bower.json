@@ -5,6 +5,6 @@
     "modernizr": "~2.8.1"
   },
   "devDependencies": {
-    "megatype": "^1.0.7"
+    "megatype": "^1.0.10"
   }
 }
