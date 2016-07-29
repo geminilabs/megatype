@@ -10,7 +10,7 @@
 // Media queries. Accepts px or em
 // Defaults to min-width, but both min->max and max-width are available too.
 // Parts based on https://gist.github.com/timknight/03e6335b8816aa534cf7
-@mixin media($min: 0, $max: 0) {
+@mixin mt-media($min: 0, $max: 0) {
     // Type of break variable
     $min-val: type-of($min);
     $min-unit: unit($min);
@@ -92,15 +92,15 @@
             }
 
             @if $min != 0 and $max != 0 {
-                @include media($minw, $maxw) {
+                @include mt-media($minw, $maxw) {
                     @content;
                 }
             } @else if $min != 0 {
-                @include media($minw) {
+                @include mt-media($minw) {
                     @content;
                 }
             } @else if $max != 0 {
-                @include media(0, $maxw) {
+                @include mt-media(0, $maxw) {
                     @content;
                 }
             }
@@ -119,7 +119,7 @@
 // apply min-width media query to one or more breakpoints
 @mixin min-width($apply-breaks: 0) {
     @each $break in $apply-breaks {
-        @include media($break) {
+        @include mt-media($break) {
             @content;
         };
     }
@@ -128,7 +128,7 @@
 // apply max-width media query to one or more breakpoints
 @mixin max-width($apply-breaks: 1) {
     @each $break in $apply-breaks {
-        @include media(0, $break) {
+        @include mt-media(0, $break) {
             @content;
         };
     }
